@@ -1,0 +1,1461 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>Wildfire Fantasy IPL 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Barlow+Condensed:wght@600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0a0a0a;--bg2:#111;--bg3:#1a1a1a;--bg4:#222;
+  --border:rgba(255,255,255,.07);--border2:rgba(255,255,255,.13);
+  --green:#39d353;--teal:#00e5b0;--gold:#f5c842;--red:#ff3b52;
+  --blue:#3d8ef0;--purple:#9d4edd;--orange:#ff8c00;
+  --text:#f0f0f0;--text2:#888;--text3:#444;
+  --nav-h:60px;
+  --grad-green:linear-gradient(135deg,#39d353,#00e5b0);
+  --grad-gold:linear-gradient(135deg,#f5c842,#ff8c00);
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;touch-action:manipulation;}
+html,body{height:100%;overflow:hidden;background:var(--bg);overscroll-behavior:none;-webkit-font-smoothing:antialiased;}
+body{color:var(--text);font-family:'Nunito',sans-serif;font-size:14px;display:flex;flex-direction:column;max-width:430px;margin:0 auto;}
+@supports(padding:max(0px)){body{padding-top:env(safe-area-inset-top);} .bottom-nav{padding-bottom:env(safe-area-inset-bottom);}}
+
+/* TOPBAR */
+.topbar{background:rgba(10,10,10,.95);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:10px 16px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;position:sticky;top:0;z-index:50;}
+.topbar-title{font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:800;background:var(--grad-green);-webkit-background-clip:text;-webkit-text-fill-color:transparent;letter-spacing:.5px;}
+.topbar-sub{font-size:10px;color:var(--text2);font-weight:700;}
+.live-dot{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:800;color:var(--green);}
+.live-dot::before{content:'';width:7px;height:7px;border-radius:50%;background:var(--green);animation:pulse 1.4s infinite;}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1);}50%{opacity:.5;transform:scale(1.3);}}
+
+/* BOTTOM NAV */
+.bottom-nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:430px;height:var(--nav-h);background:rgba(10,10,10,.95);backdrop-filter:blur(20px);border-top:1px solid var(--border);display:flex;align-items:flex-start;padding-top:6px;z-index:100;}
+.nav-item{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;cursor:pointer;padding:4px 0;}
+.nav-icon{font-size:18px;line-height:1;}
+.nav-label{font-size:8px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:.3px;}
+.nav-item.active .nav-label{color:var(--gold);}
+.nav-item.active .nav-icon{filter:drop-shadow(0 0 6px var(--gold));}
+.nav-item.active::before{content:'';position:absolute;top:0;width:20px;height:2px;background:var(--gold);border-radius:0 0 3px 3px;}
+
+/* APP BODY */
+.app-body{flex:1;overflow-y:auto;overflow-x:hidden;padding-bottom:calc(var(--nav-h) + 16px);-webkit-overflow-scrolling:touch;touch-action:pan-y;}
+.app-body::-webkit-scrollbar{display:none;}
+.screen{display:none;} .screen.active{display:block;}
+
+/* CARDS */
+.card{background:var(--bg3);border:1px solid var(--border);border-radius:14px;padding:14px;margin-bottom:8px;}
+.section-hdr{display:flex;align-items:center;justify-content:space-between;padding:4px 16px 8px;}
+.section-hdr h3{font-size:11px;font-weight:800;color:var(--text2);text-transform:uppercase;letter-spacing:.5px;}
+.section-hdr a{font-size:12px;color:var(--green);font-weight:700;cursor:pointer;}
+.sp8{height:8px;} .sp12{height:12px;} .sp16{height:16px;}
+.chip{display:inline-block;padding:2px 8px;border-radius:20px;font-size:10px;font-weight:800;text-transform:uppercase;}
+.chip.g{background:rgba(57,211,83,.15);color:var(--green);}
+.chip.r{background:rgba(255,59,82,.15);color:var(--red);}
+.chip.gold{background:rgba(245,200,66,.15);color:var(--gold);}
+.chip.b{background:rgba(61,142,240,.15);color:var(--blue);}
+.chip.gr{background:var(--bg4);color:var(--text2);}
+
+/* STANDINGS */
+.stand-row{display:flex;align-items:center;gap:10px;padding:10px 12px;background:var(--bg3);border-radius:10px;border:1px solid transparent;transition:all .15s;margin-bottom:3px;}
+.stand-row.po{border-left:3px solid var(--green);}
+.stand-row.me{border-color:rgba(57,211,83,.3);background:rgba(57,211,83,.05);}
+.stand-rank{font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:800;color:var(--text3);width:22px;text-align:center;}
+.stand-rank.r1{color:#ffd700;} .stand-rank.r2{color:#c0c0c0;} .stand-rank.r3{color:#cd7f32;} .stand-rank.r4{color:var(--green);}
+.po-cut{margin:4px 0;display:flex;align-items:center;gap:8px;font-size:10px;color:var(--text3);font-weight:800;padding:0 12px;}
+.po-cut::before,.po-cut::after{content:'';flex:1;height:1px;background:rgba(57,211,83,.2);}
+
+/* MATCHUP CARD */
+.mc{background:var(--bg3);border:1px solid var(--border);border-radius:14px;overflow:hidden;margin-bottom:8px;}
+.mc-hdr{display:flex;justify-content:space-between;align-items:center;padding:7px 12px;border-bottom:1px solid var(--border);background:var(--bg2);}
+.mc-body{display:flex;align-items:center;padding:14px 12px;gap:8px;}
+.mc-side{flex:1;}
+.mc-side.r{text-align:right;}
+.mc-score{font-family:'Barlow Condensed',sans-serif;font-size:32px;font-weight:800;}
+.mc-score.win{color:var(--green);}
+.mc-team{font-size:13px;font-weight:800;}
+.mc-mgr{font-size:10px;color:var(--text2);}
+
+/* ROSTER */
+.player-row{display:flex;align-items:center;gap:10px;padding:10px 12px;background:var(--bg3);border-radius:10px;margin-bottom:3px;border:1px solid var(--border);}
+.p-ava{width:36px;height:36px;border-radius:50%;background:var(--bg4);display:flex;align-items:center;justify-content:center;font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:800;color:var(--text2);flex-shrink:0;}
+.p-nm{font-size:13px;font-weight:800;}
+.p-sub{font-size:10px;color:var(--text2);}
+.p-pts{font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:800;color:var(--green);}
+
+/* PLAYOFF BRACKET */
+.po-match{background:var(--bg3);border:1px solid var(--border);border-radius:12px;overflow:hidden;margin-bottom:8px;}
+.po-match.q1{border-color:rgba(57,211,83,.3);}
+.po-match.elim{border-color:rgba(255,140,0,.3);}
+.po-match.q2{border-color:rgba(61,142,240,.3);}
+.po-match.final{border-color:rgba(245,200,66,.4);background:linear-gradient(135deg,var(--bg3),#1a1a00);}
+.po-hdr{padding:8px 12px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--border);}
+.po-body{display:flex;align-items:center;padding:12px;gap:6px;}
+.po-side{flex:1;}
+.po-side.r{text-align:right;}
+.po-score{font-family:'Barlow Condensed',sans-serif;font-size:26px;font-weight:800;}
+.po-score.win{color:var(--gold);}
+
+/* SCORES TAB */
+.score-card{background:var(--bg3);border:1px solid var(--border);border-radius:12px;overflow:hidden;margin-bottom:8px;}
+.score-card.live{border-color:rgba(57,211,83,.4);}
+.slb-row{display:flex;align-items:center;gap:10px;padding:10px 12px;background:var(--bg3);border-radius:10px;margin-bottom:3px;border:1px solid transparent;}
+.slb-row.me{border-color:rgba(57,211,83,.3);background:rgba(57,211,83,.05);}
+.slb-pts{font-family:'Barlow Condensed',sans-serif;font-size:24px;font-weight:800;color:var(--green);}
+
+/* SCHEDULE */
+.sched-week{background:var(--bg3);border:1px solid var(--border);border-radius:12px;overflow:hidden;margin-bottom:8px;}
+.sched-hdr{padding:8px 12px;background:var(--bg2);display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--border);}
+.sched-match{display:flex;align-items:center;padding:8px 12px;border-bottom:1px solid var(--border);gap:6px;}
+.sched-match:last-child{border-bottom:none;}
+
+/* TOAST */
+#toast{position:fixed;bottom:calc(var(--nav-h)+14px);left:50%;transform:translateX(-50%) translateY(16px);background:var(--bg3);border:1px solid var(--border2);padding:10px 18px;border-radius:24px;font-size:13px;font-weight:700;opacity:0;transition:all .25s;z-index:600;white-space:nowrap;pointer-events:none;}
+#toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+#toast.g{border-color:rgba(57,211,83,.5);color:var(--green);}
+#toast.r{border-color:rgba(255,59,82,.5);color:var(--red);}
+#toast.gold{border-color:rgba(245,200,66,.5);color:var(--gold);}
+
+/* MODAL */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:500;align-items:flex-end;justify-content:center;backdrop-filter:blur(4px);}
+.modal-overlay.open{display:flex;}
+.modal-sheet{background:var(--bg2);border-radius:24px 24px 0 0;width:100%;max-width:430px;padding:20px 20px 32px;border-top:1px solid var(--border2);max-height:85vh;overflow-y:auto;animation:slideUp .25s ease;}
+@keyframes slideUp{from{transform:translateY(40px);opacity:0;}to{transform:translateY(0);opacity:1;}}
+.sheet-handle{width:36px;height:4px;background:var(--bg4);border-radius:2px;margin:0 auto 16px;}
+.sheet-title{font-size:17px;font-weight:900;margin-bottom:14px;}
+.sheet-btn{display:block;width:100%;padding:13px;border-radius:12px;font-family:'Nunito',sans-serif;font-size:14px;font-weight:800;cursor:pointer;border:none;text-align:center;margin-top:6px;}
+.sheet-btn.p{background:var(--grad-green);color:#000;}
+.sheet-btn.s{background:var(--bg4);color:var(--text2);border:1px solid var(--border);}
+.sheet-btn.r{background:rgba(255,59,82,.15);color:var(--red);border:1px solid rgba(255,59,82,.3);}
+.sheet-input{width:100%;background:var(--bg3);border:1px solid var(--border2);color:var(--text);padding:11px 14px;border-radius:10px;font-family:'Nunito',sans-serif;font-size:14px;outline:none;margin-bottom:8px;}
+.sheet-input:focus{border-color:rgba(57,211,83,.4);}
+
+/* HOME HERO */
+.hero-matchup{margin:14px;background:var(--bg2);border-radius:18px;border:1px solid var(--border);overflow:hidden;}
+.hero-wk{text-align:center;padding:8px;font-size:10px;font-weight:800;color:var(--text2);text-transform:uppercase;letter-spacing:1px;border-bottom:1px solid var(--border);}
+.hero-vs{display:flex;align-items:center;padding:16px 12px;gap:6px;}
+.hero-side{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;}
+.hero-score{font-family:'Barlow Condensed',sans-serif;font-size:46px;font-weight:800;line-height:1;}
+.hero-footer{padding:8px 14px;background:var(--bg3);display:flex;justify-content:space-between;align-items:center;}
+</style>
+</head>
+<body>
+
+<!-- TOPBAR -->
+<div class="topbar">
+  <div>
+    <div class="topbar-title">🔥 WILDFIRE IPL 2026</div>
+    <div class="topbar-sub" id="tb-sub">Fantasy League</div>
+  </div>
+  <div style="display:flex;gap:8px;align-items:center;">
+    <span class="live-dot" id="conn-ind" style="display:none;">LIVE</span>
+    <div onclick="openModal('week')" style="background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:5px 10px;font-size:11px;font-weight:800;color:var(--text2);cursor:pointer;">⚙️ Host</div>
+  </div>
+</div>
+
+<!-- APP BODY -->
+<div class="app-body" id="app-body">
+
+  <!-- HOME -->
+  <div class="screen active" id="tab-home">
+    <div class="hero-matchup">
+      <div class="hero-wk" id="home-wk-lbl">GAMEWEEK 1</div>
+      <div class="hero-vs" id="home-vs"></div>
+      <div class="hero-footer">
+        <span style="font-size:11px;color:var(--text2);font-weight:700;">Week matchup</span>
+        <span style="font-size:11px;color:var(--green);font-weight:800;" id="home-leader">—</span>
+      </div>
+    </div>
+    <div class="section-hdr"><h3>Today's Leaderboard</h3><a onclick="showTab('scores')">Full scores →</a></div>
+    <div style="padding:0 16px;" id="home-lb"></div>
+    <div class="sp12"></div>
+    <div class="section-hdr"><h3>My Roster Today</h3><a onclick="showTab('roster')">All rosters →</a></div>
+    <div style="padding:0 16px;" id="home-roster"></div>
+    <div class="sp12"></div>
+  </div>
+
+  <!-- LEAGUE -->
+  <div class="screen" id="tab-league">
+    <div style="margin:14px;background:linear-gradient(135deg,#0a1a0a,#0a0a1a);border-radius:16px;border:1px solid rgba(57,211,83,.2);padding:16px;display:flex;align-items:center;gap:12px;">
+      <div style="font-size:32px;">🔥</div>
+      <div>
+        <div style="font-size:18px;font-weight:900;">Wildfire Fantasy IPL</div>
+        <div style="font-size:11px;color:var(--text2);" id="league-sub">10 Managers · IPL 2026</div>
+      </div>
+      <div class="chip g" id="league-chip" style="margin-left:auto;">Season</div>
+    </div>
+    <div class="section-hdr"><h3>Standings</h3></div>
+    <div style="padding:0 16px;" id="standings-list"></div>
+    <div class="sp12"></div>
+    <div class="section-hdr"><h3 id="mc-title">GW1 Matchups</h3><a onclick="showTab('schedule')">Full Schedule →</a></div>
+    <div style="padding:0 16px;" id="mc-list"></div>
+    <div class="sp12"></div>
+  </div>
+
+  <!-- SCORES -->
+  <div class="screen" id="tab-scores">
+    <div style="padding:14px 16px 0;">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+        <div>
+          <div style="font-size:18px;font-weight:900;">🏏 Live Scores</div>
+          <div style="font-size:11px;color:var(--text2);" id="scores-updated">Auto-updates every 6 min</div>
+        </div>
+        <button id="refresh-btn" onclick="manualRefresh()" style="background:rgba(57,211,83,.12);border:1px solid rgba(57,211,83,.3);color:var(--green);font-size:11px;font-weight:800;padding:6px 12px;border-radius:8px;cursor:pointer;font-family:'Nunito',sans-serif;">↻ Refresh</button>
+      </div>
+      <div id="live-matches-wrap">
+        <div style="font-size:11px;font-weight:800;color:var(--text3);text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px;">Live IPL Matches</div>
+        <div id="live-matches"><div style="text-align:center;padding:24px;color:var(--text3);font-size:13px;">Loading…</div></div>
+      </div>
+      <div class="sp12"></div>
+      <div style="font-size:11px;font-weight:800;color:var(--text3);text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px;">Gameweek Leaderboard</div>
+      <div id="scores-lb"></div>
+    </div>
+    <div class="sp16"></div>
+  </div>
+
+  <!-- ROSTER -->
+  <div class="screen" id="tab-roster">
+    <div style="padding:12px 16px 0;display:flex;gap:8px;overflow-x:auto;flex-shrink:0;" id="roster-mode-tabs">
+      <div onclick="setRosterMode('rosters')" id="rmode-rosters" style="flex-shrink:0;padding:6px 14px;border-radius:20px;font-size:11px;font-weight:800;cursor:pointer;border:1px solid var(--green);background:rgba(57,211,83,.15);color:var(--green);">👥 Rosters</div>
+      <div onclick="setRosterMode('unsold')" id="rmode-unsold" style="flex-shrink:0;padding:6px 14px;border-radius:20px;font-size:11px;font-weight:800;cursor:pointer;border:1px solid var(--border);background:var(--bg3);color:var(--text2);">🆓 Unsold (147)</div>
+      <div onclick="setRosterMode('trade')" id="rmode-trade" style="flex-shrink:0;padding:6px 14px;border-radius:20px;font-size:11px;font-weight:800;cursor:pointer;border:1px solid var(--border);background:var(--bg3);color:var(--text2);">🔄 Trade</div>
+    </div>
+    <div style="padding:10px 16px 0;display:flex;gap:8px;overflow-x:auto;" id="roster-tabs"></div>
+    <div style="padding:8px 16px 0;" id="roster-content"></div>
+    <div class="sp12"></div>
+  </div>
+
+  <!-- PLAYOFFS -->
+  <div class="screen" id="tab-playoffs">
+    <div style="margin:14px;background:linear-gradient(135deg,#1a1540,#1a2a10);border-radius:16px;border:1px solid rgba(157,78,221,.3);padding:16px;text-align:center;">
+      <div style="font-size:36px;margin-bottom:6px;">🏆</div>
+      <div style="font-family:'Barlow Condensed',sans-serif;font-size:24px;font-weight:800;letter-spacing:1px;">WILDFIRE PLAYOFFS</div>
+      <div style="font-size:11px;color:var(--text2);margin-top:4px;" id="po-sub">Top 4 advance after 9 league weeks</div>
+    </div>
+    <div class="sp8"></div>
+    <div style="padding:0 16px;" id="po-content"></div>
+    <div class="sp16"></div>
+  </div>
+
+  <!-- SCHEDULE -->
+  <div class="screen" id="tab-schedule">
+    <div style="padding:14px 16px 0;">
+      <div style="font-size:18px;font-weight:900;margin-bottom:4px;">📅 Full Schedule</div>
+      <div style="font-size:11px;color:var(--text2);margin-bottom:14px;">9 Gameweeks · 5 Matchups/Week</div>
+      <div id="full-schedule"></div>
+    </div>
+    <div class="sp16"></div>
+  </div>
+
+  <!-- UNSOLD PLAYERS -->
+  <div class="screen" id="tab-unsold">
+    <div style="padding:14px 16px 0;">
+      <div style="font-size:18px;font-weight:900;margin-bottom:2px;">🆓 Unsold Players</div>
+      <div style="font-size:11px;color:var(--text2);margin-bottom:10px;" id="unsold-count">Available</div>
+      <input class="sheet-input" id="unsold-search" placeholder="Search player or team…" oninput="renderUnsoldList()" style="margin-bottom:8px;">
+      <div style="display:flex;gap:6px;margin-bottom:10px;overflow-x:auto;padding-bottom:2px;">
+        <button onclick="setUnsoldFilter('')"           id="uf-all"  style="flex-shrink:0;padding:5px 12px;border-radius:20px;font-size:11px;font-weight:800;cursor:pointer;border:1px solid var(--green);background:rgba(57,211,83,.15);color:var(--green);">All</button>
+        <button onclick="setUnsoldFilter('Batsman')"    id="uf-bat"  style="flex-shrink:0;padding:5px 12px;border-radius:20px;font-size:11px;font-weight:800;cursor:pointer;border:1px solid var(--border);background:var(--bg3);color:var(--text2);">Batters</button>
+        <button onclick="setUnsoldFilter('Bowler')"     id="uf-bowl" style="flex-shrink:0;padding:5px 12px;border-radius:20px;font-size:11px;font-weight:800;cursor:pointer;border:1px solid var(--border);background:var(--bg3);color:var(--text2);">Bowlers</button>
+        <button onclick="setUnsoldFilter('All-Rounder')" id="uf-ar"  style="flex-shrink:0;padding:5px 12px;border-radius:20px;font-size:11px;font-weight:800;cursor:pointer;border:1px solid var(--border);background:var(--bg3);color:var(--text2);">All-Rounders</button>
+        <button onclick="setUnsoldFilter('Wicketkeeper')" id="uf-wk" style="flex-shrink:0;padding:5px 12px;border-radius:20px;font-size:11px;font-weight:800;cursor:pointer;border:1px solid var(--border);background:var(--bg3);color:var(--text2);">WK</button>
+      </div>
+      <div id="unsold-list"></div>
+    </div>
+    <div class="sp16"></div>
+  </div>
+
+
+</div>
+
+<!-- BOTTOM NAV -->
+<div class="bottom-nav">
+  <div class="nav-item active" id="nav-home" onclick="showTab('home')"><div class="nav-icon">🏠</div><div class="nav-label">Home</div></div>
+  <div class="nav-item" id="nav-league" onclick="showTab('league')"><div class="nav-icon">📊</div><div class="nav-label">League</div></div>
+  <div class="nav-item" id="nav-scores" onclick="showTab('scores')"><div class="nav-icon">📺</div><div class="nav-label">Scores</div></div>
+  <div class="nav-item" id="nav-roster" onclick="showTab('roster')"><div class="nav-icon">👥</div><div class="nav-label">Rosters</div></div>
+  <div class="nav-item" id="nav-playoffs" onclick="showTab('playoffs')"><div class="nav-icon">🏆</div><div class="nav-label">Playoffs</div></div>
+  <div class="nav-item" id="nav-schedule" onclick="showTab('schedule')"><div class="nav-icon">📅</div><div class="nav-label">Schedule</div></div>
+  <div class="nav-item" id="nav-unsold" onclick="showTab('unsold')"><div class="nav-icon">🆓</div><div class="nav-label">Unsold</div></div>
+</div>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modal" onclick="closeModal()">
+  <div class="modal-sheet" onclick="event.stopPropagation()">
+    <div class="sheet-handle"></div>
+    <div id="modal-content"></div>
+  </div>
+</div>
+
+<div id="toast"></div>
+
+<script>
+// ═══════════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════════
+const SAVE_KEY = 'wildfire_2026';
+
+const DEFAULT_STATE = {
+  currentWeek: 1,
+  seasonPhase: 'league',
+  playoffBracket: null,
+  weekResults: {}, // weekNum -> {managerIdx: pts}
+  matchResults: {}, // "wk_mi" -> {s1, s2, played}
+};
+
+let S = loadState();
+let activeRosterIdx = 0;
+let liveScoreInterval = null;
+let lastRefresh = 0;
+let fantasyPtsToday = {};
+let currentMatchData = [];
+
+function loadState(){
+  try{ const d=localStorage.getItem(SAVE_KEY); if(d)return JSON.parse(d); }catch(e){}
+  return {...DEFAULT_STATE, weekResults:{}, matchResults:{}};
+}
+function saveState(){
+  try{ localStorage.setItem(SAVE_KEY, JSON.stringify(S)); }catch(e){}
+}
+
+// ═══════════════════════════════════════════
+// ROSTERS (from Excel)
+// ═══════════════════════════════════════════
+const MANAGERS = [
+  {name:"mythy",                emoji:"🔥"},
+  {name:"Orange Army",          emoji:"🟠"},
+  {name:"CSK",                  emoji:"💛"},
+  {name:"Aloo Arjun Reddy Garu",emoji:"⭐"},
+  {name:"Sun God Nikus",        emoji:"☀️"},
+  {name:"GaandMeinDanda",       emoji:"💀"},
+  {name:"Ee Sala Cup Namde",    emoji:"🏆"},
+  {name:"Manda",                emoji:"🐍"},
+  {name:"WhistlePodu",          emoji:"🎵"},
+  {name:"Cheapuk Super Kings",  emoji:"💰"},
+];
+
+let ROSTERS = [
+  [{name:"Sai Sudharsan",role:"Batsman",team:"GT"},{name:"Ruturaj Gaikwad",role:"Batsman",team:"CSK"},{name:"Travis Head",role:"Batsman",team:"SRH"},{name:"Philip Salt",role:"Wicketkeeper",team:"RCB"},{name:"Mayank Yadav",role:"Bowler",team:"LSG"},{name:"Jos Buttler",role:"Wicketkeeper",team:"GT"},{name:"Harpreet Brar",role:"Bowler",team:"PBKS"},{name:"Nitish Kumar Reddy",role:"All-Rounder",team:"SRH"},{name:"Ajinkya Rahane",role:"Batsman",team:"KKR"},{name:"Dhruv Jurel",role:"Wicketkeeper",team:"RR"}],
+  [{name:"Abhishek Sharma",role:"All-Rounder",team:"SRH"},{name:"Shreyas Iyer",role:"Batsman",team:"PBKS"},{name:"KL Rahul",role:"Wicketkeeper",team:"DC"},{name:"Prabhsimran Singh",role:"Wicketkeeper",team:"PBKS"},{name:"Khaleel Ahmed",role:"Bowler",team:"CSK"},{name:"Digvesh Singh Rathi",role:"Bowler",team:"LSG"},{name:"Vaibhav Arora",role:"Bowler",team:"KKR"},{name:"Glenn Phillips",role:"All-Rounder",team:"GT"},{name:"Rahul Chahar",role:"Bowler",team:"CSK"},{name:"Shardul Thakur",role:"All-Rounder",team:"MI"}],
+  [{name:"Ishan Kishan",role:"Wicketkeeper",team:"SRH"},{name:"Priyansh Arya",role:"Batsman",team:"PBKS"},{name:"Finn Allen",role:"Batsman",team:"KKR"},{name:"Rajat Patidar",role:"Batsman",team:"RCB"},{name:"Ravindra Jadeja",role:"All-Rounder",team:"RR"},{name:"Ayush Mhatre",role:"Batsman",team:"CSK"},{name:"Liam Livingstone",role:"All-Rounder",team:"SRH"},{name:"Ravisrinivasan Sai Kishore",role:"All-Rounder",team:"GT"},{name:"Matt Henry",role:"Bowler",team:"CSK"},{name:"Kartik Tyagi",role:"Bowler",team:"KKR"}],
+  [{name:"Virat Kohli",role:"Batsman",team:"RCB"},{name:"Hardik Pandya",role:"All-Rounder",team:"MI"},{name:"Suryakumar Yadav",role:"Batsman",team:"MI"},{name:"Krunal Pandya",role:"All-Rounder",team:"RCB"},{name:"Kamindu Mendis",role:"All-Rounder",team:"SRH"},{name:"Tejasvi Dahiya",role:"Wicketkeeper",team:"KKR"},{name:"Amit Kumar",role:"Batsman",team:"SRH"},{name:"Harsh Dubey",role:"All-Rounder",team:"SRH"},{name:"Jaydev Unadkat",role:"Bowler",team:"SRH"},{name:"Smaran Ravichandran",role:"Batsman",team:"SRH"}],
+  [{name:"Jasprit Bumrah",role:"Bowler",team:"MI"},{name:"Varun Chakaravarthy",role:"Bowler",team:"KKR"},{name:"Aiden Markram",role:"Batsman",team:"LSG"},{name:"Will Jacks",role:"All-Rounder",team:"MI"},{name:"Shimron Hetmyer",role:"Batsman",team:"RR"},{name:"Deepak Chahar",role:"Bowler",team:"MI"},{name:"Kagiso Rabada",role:"Bowler",team:"GT"},{name:"David Miller",role:"Batsman",team:"DC"},{name:"Marco Jansen",role:"All-Rounder",team:"PBKS"},{name:"Akshat Raghuwanshi",role:"Batsman",team:"LSG"}],
+  [{name:"Rohit Sharma",role:"Batsman",team:"MI"},{name:"Arshdeep Singh",role:"Bowler",team:"PBKS"},{name:"Shivam Dube",role:"All-Rounder",team:"CSK"},{name:"Tristan Stubbs",role:"Wicketkeeper",team:"DC"},{name:"Bhuvneshwar Kumar",role:"Bowler",team:"RCB"},{name:"Harshal Patel",role:"Bowler",team:"SRH"},{name:"Devdutt Padikkal",role:"Batsman",team:"RCB"},{name:"Naman Dhir",role:"Batsman",team:"MI"},{name:"Avesh Khan",role:"Bowler",team:"LSG"},{name:"Aniket Verma",role:"Batsman",team:"SRH"}],
+  [{name:"Yashasvi Jaiswal",role:"Batsman",team:"RR"},{name:"Sunil Narine",role:"All-Rounder",team:"KKR"},{name:"Dewald Brevis",role:"Batsman",team:"CSK"},{name:"Heinrich Klaasen",role:"Wicketkeeper",team:"SRH"},{name:"Shahrukh Khan",role:"All-Rounder",team:"GT"},{name:"Angkrish Raghuvanshi",role:"Batsman",team:"KKR"},{name:"Rovman Powell",role:"Batsman",team:"KKR"},{name:"Sherfane Rutherford",role:"All-Rounder",team:"MI"},{name:"Anrich Nortje",role:"Bowler",team:"LSG"},{name:"Urvil Patel",role:"Wicketkeeper",team:"CSK"}],
+  [{name:"Vaibhav Sooryavanshi",role:"Batsman",team:"RR"},{name:"Rishabh Pant",role:"Wicketkeeper",team:"LSG"},{name:"Josh Hazlewood",role:"Bowler",team:"RCB"},{name:"Jitesh Sharma",role:"Wicketkeeper",team:"RCB"},{name:"Rachin Ravindra",role:"All-Rounder",team:"KKR"},{name:"Quinton de Kock",role:"Wicketkeeper",team:"MI"},{name:"Sarfaraz Khan",role:"Batsman",team:"CSK"},{name:"Akeal Hosein",role:"Bowler",team:"CSK"},{name:"Jacob Bethell",role:"All-Rounder",team:"RCB"},{name:"Jofra Archer",role:"Bowler",team:"RR"}],
+  [{name:"Nicholas Pooran",role:"Wicketkeeper",team:"LSG"},{name:"Sanju Samson",role:"Wicketkeeper",team:"CSK"},{name:"Mohammed Siraj",role:"Bowler",team:"GT"},{name:"Riyan Parag",role:"All-Rounder",team:"RR"},{name:"Mohammed Shami",role:"Bowler",team:"LSG"},{name:"MS Dhoni",role:"Wicketkeeper",team:"CSK"},{name:"T Natarajan",role:"Bowler",team:"DC"},{name:"Tim Seifert",role:"Wicketkeeper",team:"KKR"},{name:"Pathum Nissanka",role:"Batsman",team:"DC"},{name:"Rashid Khan",role:"All-Rounder",team:"GT"}],
+  [{name:"Shubman Gill",role:"Batsman",team:"GT"},{name:"Mitchell Starc",role:"Bowler",team:"DC"},{name:"Tilak Varma",role:"Batsman",team:"MI"},{name:"Ben Duckett",role:"Batsman",team:"DC"},{name:"Rinku Singh",role:"Batsman",team:"KKR"},{name:"Anshul Kamboj",role:"All-Rounder",team:"CSK"},{name:"Kuldeep Yadav",role:"Bowler",team:"DC"},{name:"Prasidh Krishna",role:"Bowler",team:"GT"},{name:"Ashutosh Sharma",role:"All-Rounder",team:"DC"},{name:"Nitish Rana",role:"Batsman",team:"DC"}],
+];
+
+// Stats per manager per week (stored in S.weekResults)
+function getMgrStats(){
+  return MANAGERS.map((m,i)=>{
+    let wins=0,losses=0,pf=0,pa=0;
+    for(let wk=1;wk<S.currentWeek;wk++){
+      const sch=SCHEDULE[wk-1];
+      sch.forEach((match,mi)=>{
+        const key=`${wk}_${mi}`;
+        const res=S.matchResults[key];
+        if(!res||!res.played) return;
+        if(match.m1===i){pf+=res.s1;pa+=res.s2;if(res.s1>res.s2)wins++;else if(res.s2>res.s1)losses++;}
+        if(match.m2===i){pf+=res.s2;pa+=res.s1;if(res.s2>res.s1)wins++;else if(res.s1>res.s2)losses++;}
+      });
+    }
+    return {...m,idx:i,wins,losses,pf:Math.round(pf),pa:Math.round(pa)};
+  });
+}
+
+// ═══════════════════════════════════════════
+// SCHEDULE (9 weeks, 10 teams, circle method)
+// ═══════════════════════════════════════════
+function genSchedule(){
+  const n=10, sched=[];
+  let t=[1,2,3,4,5,6,7,8,9];
+  const DATES=["Mar 28–Apr 3","Apr 4–Apr 10","Apr 11–Apr 17","Apr 18–Apr 24","Apr 25–May 1","May 2–May 8","May 9–May 15","May 16–May 22","May 23–May 25"];
+  for(let w=0;w<9;w++){
+    const wt=[0,...t], matches=[];
+    for(let i=0;i<n/2;i++) matches.push({m1:wt[i],m2:wt[n-1-i]});
+    sched.push({week:w+1,date:DATES[w],matches});
+    t=[t[t.length-1],...t.slice(0,-1)];
+  }
+  return sched;
+}
+const SCHEDULE = genSchedule();
+
+// ═══════════════════════════════════════════
+// SCORING
+// ═══════════════════════════════════════════
+const SC = {
+  runPt:1, wicketPt:30, catchPt:8, runOutPt:10,
+  fourBonus:2, sixBonus:4,
+  fiftyBonus:10, centuryBonus:30, duckPenalty:-5,
+  threeWktBonus:25, fourWktBonus:30, fiveWktBonus:40, sixWktBonus:50,
+  dotBall:1,
+  // SR (min 10 balls)
+  sr250:30, sr225:20, sr200:14, sr170:8, sr150:4, sr130:1, sr90:-1, sr70:-2, srBelow70:-4,
+  // Economy (min 2 overs)
+  econ7:10, econ9:4, econ11:0, econ13:-2, econ15:-4, econ20:-6, econ25:-10, econ30:-15, econMax:-20
+};
+
+function calcPts(p){
+  let pts = 0;
+  const r=p.runs||0, w=p.wickets||0, c=p.catches||0, ro=p.runOuts||0;
+  const fours=p.fours||0, sixes=p.sixes||0, dots=p.dots||0;
+  const balls=p.balls||0, overs=p.overs||0, econ=p.economy||0, sr=p.sr||0;
+  const batted=p.batted||false;
+
+  pts += r*SC.runPt + w*SC.wicketPt + c*SC.catchPt + ro*SC.runOutPt;
+  pts += fours*SC.fourBonus + sixes*SC.sixBonus + dots*SC.dotBall;
+  if(r>=100) pts+=SC.centuryBonus; else if(r>=50) pts+=SC.fiftyBonus;
+  if(batted&&r===0) pts+=SC.duckPenalty;
+  if(w>=6) pts+=SC.sixWktBonus; else if(w>=5) pts+=SC.fiveWktBonus;
+  else if(w>=4) pts+=SC.fourWktBonus; else if(w>=3) pts+=SC.threeWktBonus;
+
+  // SR bonus (min 10 balls)
+  if(balls>=10){
+    if(sr>=250) pts+=SC.sr250;
+    else if(sr>=225) pts+=SC.sr225;
+    else if(sr>=200) pts+=SC.sr200;
+    else if(sr>=170) pts+=SC.sr170;
+    else if(sr>=150) pts+=SC.sr150;
+    else if(sr>=130) pts+=SC.sr130;
+    else if(sr>=100) {} // 0
+    else if(sr>=90) pts+=SC.sr90;
+    else if(sr>=70) pts+=SC.sr70;
+    else pts+=SC.srBelow70;
+  }
+
+  // Economy (min 2 overs)
+  if(overs>=2){
+    if(econ<7) pts+=SC.econ7;
+    else if(econ<9) pts+=SC.econ9;
+    else if(econ<11) {} // 0
+    else if(econ<13) pts+=SC.econ11;
+    else if(econ<15) pts+=SC.econ13;
+    else if(econ<20) pts+=SC.econ15;
+    else if(econ<25) pts+=SC.econ20;
+    else if(econ<30) pts+=SC.econ30;
+    else pts+=SC.econMax;
+  }
+
+  return Math.round(pts*10)/10;
+}
+
+function fuzzyMatch(a,b){
+  if(!a||!b) return false;
+  const x=a.toLowerCase().replace(/[^a-z]/g,'');
+  const y=b.toLowerCase().replace(/[^a-z]/g,'');
+  const xL=x.split('').slice(-4).join(''), yL=y.split('').slice(-4).join('');
+  if(xL.length>2&&xL===yL) return true;
+  return x.includes(y.slice(-5))||y.includes(x.slice(-5));
+}
+
+// ═══════════════════════════════════════════
+// CRICAPI
+// ═══════════════════════════════════════════
+const API_KEY = '461ccf26-28a9-44b9-ad73-93f4b1c3a42b';
+
+async function fetchLiveScores(manual=false){
+  const el=document.getElementById('live-matches');
+  const lu=document.getElementById('scores-updated');
+  if(manual&&el) el.innerHTML='<div style="text-align:center;padding:20px;color:var(--text3);">Fetching…</div>';
+  try{
+    const res=await fetch(`https://api.cricapi.com/v1/currentMatches?apikey=${API_KEY}&offset=0`);
+    const data=await res.json();
+    if(data.status!=='success'){if(el)el.innerHTML='<div style="text-align:center;padding:20px;color:var(--red);">API Error</div>';return;}
+    const ipl=(data.data||[]).filter(m=>m.name&&['csk','mi','rcb','kkr','gt','lsg','dc','pbks','rr','srh'].some(t=>m.name.toLowerCase().includes(t)));
+    currentMatchData=ipl.length?ipl:(data.data||[]).slice(0,4);
+    if(lu) lu.textContent='Updated: '+new Date().toLocaleTimeString();
+    document.getElementById('conn-ind').style.display='';
+    renderLiveMatches(currentMatchData);
+    computeFantasyPts(currentMatchData);
+    renderScoresLB();
+    renderHomeLB();
+  }catch(e){
+    if(el) el.innerHTML='<div style="text-align:center;padding:20px;color:var(--red);">Cannot reach CricAPI</div>';
+  }
+}
+
+function renderLiveMatches(matches){
+  const el=document.getElementById('live-matches');
+  if(!el) return;
+  if(!matches.length){el.innerHTML='<div style="text-align:center;padding:24px;color:var(--text3);">No IPL matches right now 🏏</div>';return;}
+  el.innerHTML=matches.map(m=>{
+    const live=!m.matchEnded&&m.matchStarted, done=m.matchEnded;
+    const t1=m.teams&&m.teams[0]||'Team 1', t2=m.teams&&m.teams[1]||'Team 2';
+    const sc=m.score||[], s1=sc.find(s=>s.inning&&s.inning.includes(t1)), s2=sc.find(s=>s.inning&&s.inning.includes(t2));
+    return`<div class="score-card ${live?'live':''}">
+      <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 12px;border-bottom:1px solid var(--border);">
+        <span style="font-size:11px;color:var(--text2);font-weight:700;">${m.name||'IPL'}</span>
+        <span style="font-size:10px;font-weight:800;color:${live?'var(--green)':done?'var(--text3)':'var(--blue)'}">${live?'🔴 LIVE':done?'FINAL':'UPCOMING'}</span>
+      </div>
+      <div style="padding:12px;display:flex;justify-content:space-between;align-items:center;">
+        <div><div style="font-size:13px;font-weight:800;">${t1}</div><div style="font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:800;color:${live?'var(--green)':'var(--text)'};">${s1?`${s1.r}/${s1.w} (${s1.o}ov)`:'—'}</div></div>
+        <div style="font-size:11px;font-weight:800;color:var(--text3);">VS</div>
+        <div style="text-align:right;"><div style="font-size:13px;font-weight:800;">${t2}</div><div style="font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:800;">${s2?`${s2.r}/${s2.w} (${s2.o}ov)`:'—'}</div></div>
+      </div>
+      <div style="padding:0 12px 8px;font-size:11px;color:var(--text2);">${m.status||''}</div>
+    </div>`;
+  }).join('');
+}
+
+async function computeFantasyPts(matches){
+  fantasyPtsToday={};
+  MANAGERS.forEach((_,i)=>fantasyPtsToday[i]={total:0,players:{}});
+  for(const m of matches){
+    if(!m.matchStarted) continue;
+    try{
+      const res=await fetch(`https://api.cricapi.com/v1/match_scorecard?apikey=${API_KEY}&id=${m.id}`);
+      const data=await res.json();
+      if(data.status!=='success'||!data.data) continue;
+      processScorecard(data.data);
+    }catch(e){}
+  }
+  renderScoresLB();
+  renderHomeLB();
+  if(document.getElementById('tab-roster').classList.contains('active')) renderRoster();
+}
+
+function processScorecard(sc){
+  const batters=[], bowlers=[];
+  (sc.scorecard||[]).forEach(inn=>{
+    (inn.batting||[]).forEach(b=>{if(b.batsman?.name){
+      const runs=parseInt(b.r)||0, balls=parseInt(b.b)||0;
+      batters.push({name:b.batsman.name,runs,balls,fours:parseInt(b['4s'])||0,sixes:parseInt(b['6s'])||0,sr:balls>0?Math.round((runs/balls)*100):0,batted:true,dismissal:b.dismissal});
+    }});
+    (inn.bowling||[]).forEach(b=>{if(b.bowler?.name){
+      const overs=parseFloat(b.o)||0;
+      const dots=parseInt(b.d||b.dots)||0;
+      bowlers.push({name:b.bowler.name,wickets:parseInt(b.w)||0,overs,dots,economy:parseFloat(b.eco)||0});
+    }});
+    (inn.fielding||[]).forEach(f=>{if(f.fielder?.name){
+      // handle catches from fielding data if available
+    }});
+  });
+
+  ROSTERS.forEach((roster,mi)=>{
+    roster.forEach(p=>{
+      const bat=batters.find(b=>fuzzyMatch(b.name,p.name));
+      const bowl=bowlers.find(b=>fuzzyMatch(b.name,p.name));
+      let pd={};
+      if(bat) pd={...bat,batted:true};
+      if(bowl) pd={...pd,...bowl};
+      if(!bat&&!bowl) return;
+      const pts=calcPts(pd);
+      if(!fantasyPtsToday[mi]) fantasyPtsToday[mi]={total:0,players:{}};
+      fantasyPtsToday[mi].players[p.name]={pts,...pd};
+      fantasyPtsToday[mi].total=Math.round(((fantasyPtsToday[mi].total||0)+pts)*10)/10;
+    });
+  });
+}
+
+let lastRefreshTs=0;
+function manualRefresh(){
+  const now=Date.now(), cool=60000;
+  if(now-lastRefreshTs<cool){toast('Wait '+(Math.ceil((cool-(now-lastRefreshTs))/1000))+'s ⏳','');return;}
+  lastRefreshTs=now;
+  fetchLiveScores(true);
+  toast('Refreshing… 🏏','g');
+}
+
+// ═══════════════════════════════════════════
+// RENDER FUNCTIONS
+// ═══════════════════════════════════════════
+function renderAll(){
+  updateTopbar();
+  renderHome();
+  renderStandings();
+  renderCurrentMatchups();
+  renderScoresLB();
+  renderHomeLB();
+  renderRosterTabs();
+  renderRoster();
+  renderPlayoffs();
+  renderFullSchedule();
+}
+
+function updateTopbar(){
+  const el=document.getElementById('tb-sub');
+  if(el) el.textContent=`GW ${S.currentWeek} · ${S.seasonPhase==='playoffs'?'🏆 Playoffs':'League Stage'}`;
+}
+
+function getStandings(){
+  return getMgrStats().sort((a,b)=>b.wins-a.wins||(b.pf-b.pa)-(a.pf-a.pa));
+}
+
+function renderHome(){
+  const wk=S.currentWeek-1;
+  if(wk>=9){document.getElementById('home-wk-lbl').textContent='🏆 PLAYOFFS';return;}
+  document.getElementById('home-wk-lbl').textContent=`GAMEWEEK ${S.currentWeek} · ${SCHEDULE[wk]?.date||''}`;
+  // Find my matchup — default to first manager's matchup
+  const myMatch=SCHEDULE[wk]?.matches[0];
+  if(myMatch){
+    const m1=MANAGERS[myMatch.m1], m2=MANAGERS[myMatch.m2];
+    const key=`${S.currentWeek}_0`;
+    const res=S.matchResults[key];
+    const p1=res?.s1||(fantasyPtsToday[myMatch.m1]?.total||0);
+    const p2=res?.s2||(fantasyPtsToday[myMatch.m2]?.total||0);
+    document.getElementById('home-vs').innerHTML=`
+      <div class="hero-side">
+        <div style="font-size:28px;">${m1.emoji}</div>
+        <div style="font-size:12px;font-weight:800;text-align:center;">${m1.name}</div>
+        <div class="hero-score" style="color:${p1>p2?'var(--green)':'var(--text)'}">${p1.toFixed(0)}</div>
+      </div>
+      <div style="font-size:13px;font-weight:900;color:var(--text3);">VS</div>
+      <div class="hero-side">
+        <div style="font-size:28px;">${m2.emoji}</div>
+        <div style="font-size:12px;font-weight:800;text-align:center;">${m2.name}</div>
+        <div class="hero-score" style="color:${p2>p1?'var(--green)':'var(--text)'}">${p2.toFixed(0)}</div>
+      </div>`;
+    document.getElementById('home-leader').textContent=p1>p2?m1.name:p2>p1?m2.name:'Tied';
+  }
+
+  // My roster today (first manager)
+  const myRoster=ROSTERS[0];
+  const myPts=fantasyPtsToday[0];
+  document.getElementById('home-roster').innerHTML=myRoster.slice(0,5).map(p=>{
+    const pd=myPts?.players[p.name];
+    const pts=pd?.pts||0;
+    const ini=p.name.split(' ').map(w=>w[0]).join('').slice(0,2);
+    return`<div class="player-row">
+      <div class="p-ava">${ini}</div>
+      <div style="flex:1;min-width:0;">
+        <div class="p-nm">${p.name}</div>
+        <div class="p-sub">${p.team} · ${p.role}</div>
+      </div>
+      <div class="p-pts" style="color:${pts<0?'var(--red)':'var(--green)'}">${pts>0?'+':''}${pts}</div>
+    </div>`;
+  }).join('');
+}
+
+function renderHomeLB(){
+  const el=document.getElementById('home-lb');
+  if(!el) return;
+  const ranked=[...MANAGERS.map((_,i)=>({i,pts:fantasyPtsToday[i]?.total||0,...MANAGERS[i]}))].sort((a,b)=>b.pts-a.pts);
+  el.innerHTML=ranked.slice(0,5).map((r,rank)=>`
+    <div class="slb-row ${rank===0?'me':''}">
+      <div style="font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:800;color:var(--text3);width:22px;text-align:center;">${rank+1}</div>
+      <div style="font-size:18px;">${r.emoji}</div>
+      <div style="flex:1;font-size:13px;font-weight:800;">${r.name}</div>
+      <div class="slb-pts">${r.pts>0?'+':''}${r.pts}</div>
+    </div>`).join('');
+}
+
+function renderStandings(){
+  const el=document.getElementById('standings-list');
+  if(!el) return;
+  const sorted=getStandings();
+  el.innerHTML=sorted.map((m,i)=>`
+    <div class="stand-row ${i<4?'po':''}">
+      <div class="stand-rank ${i===0?'r1':i===1?'r2':i===2?'r3':i===3?'r4':''}">${i+1}</div>
+      <div style="font-size:18px;">${m.emoji}</div>
+      <div style="flex:1;min-width:0;">
+        <div style="font-size:13px;font-weight:800;">${m.name}</div>
+        <div style="font-size:10px;color:var(--text2);">${m.wins}W · ${m.losses}L</div>
+      </div>
+      <div style="text-align:right;">
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:700;">${m.wins}-${m.losses}</div>
+        <div style="font-size:10px;color:var(--text2);">PF: ${m.pf}</div>
+      </div>
+    </div>
+    ${i===3&&sorted.length>4?'<div class="po-cut">Playoff line</div>':''}`
+  ).join('');
+
+  const chip=document.getElementById('league-chip');
+  if(chip){chip.textContent=S.seasonPhase==='playoffs'?'🏆 Playoffs':'League Stage';chip.className=`chip ${S.seasonPhase==='playoffs'?'gold':'g'}`;}
+}
+
+function renderCurrentMatchups(){
+  const wk=S.currentWeek-1;
+  const el=document.getElementById('mc-list');
+  const tl=document.getElementById('mc-title');
+  if(!el||wk>=9) return;
+  if(tl) tl.textContent=`GW${S.currentWeek} Matchups`;
+  const matches=SCHEDULE[wk].matches;
+  el.innerHTML=matches.map((m,mi)=>{
+    const m1=MANAGERS[m.m1], m2=MANAGERS[m.m2];
+    const key=`${S.currentWeek}_${mi}`;
+    const res=S.matchResults[key];
+    const p1=res?.s1||(fantasyPtsToday[m.m1]?.total||0);
+    const p2=res?.s2||(fantasyPtsToday[m.m2]?.total||0);
+    const w1=res?.played&&p1>p2, w2=res?.played&&p2>p1;
+    return`<div class="mc">
+      <div class="mc-hdr">
+        <span style="font-size:10px;font-weight:800;color:var(--text3);">Match ${mi+1}</span>
+        <span style="font-size:10px;font-weight:800;color:${res?.played?'var(--text3)':'var(--blue)'}">${res?.played?'✅ FINAL':'⏰ Live'}</span>
+      </div>
+      <div class="mc-body">
+        <div class="mc-side">
+          <div style="font-size:16px;">${m1.emoji}</div>
+          <div class="mc-team">${m1.name}</div>
+          <div class="mc-score ${w1?'win':''}">${p1.toFixed(0)}</div>
+        </div>
+        <div style="font-size:12px;font-weight:900;color:var(--text3);">VS</div>
+        <div class="mc-side r">
+          <div style="font-size:16px;">${m2.emoji}</div>
+          <div class="mc-team">${m2.name}</div>
+          <div class="mc-score ${w2?'win':''}">${p2.toFixed(0)}</div>
+        </div>
+      </div>
+      ${res?.played?`<div style="text-align:center;padding:0 12px 8px;font-size:11px;font-weight:800;color:var(--green);">${w1?m1.name:w2?m2.name:'Draw'} wins!</div>`:''}
+    </div>`;
+  }).join('');
+}
+
+function renderScoresLB(){
+  const el=document.getElementById('scores-lb');
+  if(!el) return;
+  const ranked=[...MANAGERS.map((_,i)=>({i,pts:fantasyPtsToday[i]?.total||0,...MANAGERS[i]}))].sort((a,b)=>b.pts-a.pts);
+  el.innerHTML=ranked.map((r,rank)=>`
+    <div class="slb-row">
+      <div style="font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:800;color:var(--text3);width:22px;text-align:center;">${rank+1}</div>
+      <div style="font-size:18px;">${r.emoji}</div>
+      <div style="flex:1;"><div style="font-size:13px;font-weight:800;">${r.name}</div></div>
+      <div class="slb-pts">${r.pts>0?'+':''}${r.pts}</div>
+    </div>`).join('');
+}
+
+function renderRosterTabs(){
+  const el=document.getElementById('roster-tabs');
+  if(!el) return;
+  el.innerHTML=MANAGERS.map((m,i)=>`
+    <div onclick="activeRosterIdx=${i};renderRoster();" style="flex-shrink:0;padding:6px 12px;border-radius:20px;font-size:11px;font-weight:800;cursor:pointer;border:1px solid ${i===activeRosterIdx?'var(--green)':'var(--border)'};background:${i===activeRosterIdx?'rgba(57,211,83,.15)':'var(--bg3)'};color:${i===activeRosterIdx?'var(--green)':'var(--text2)'};">
+      ${m.emoji} ${m.name.split(' ')[0]}
+    </div>`).join('');
+}
+
+
+const UNSOLD_PLAYERS = [
+  {name:"Abhinandan Singh",role:"Bowler",team:"RCB"},
+  {name:"Tim David",role:"Batsman",team:"RCB"},
+  {name:"Praful Hinge",role:"Bowler",team:"SRH"},
+  {name:"Yash Thakur",role:"Bowler",team:"PBKS"},
+  {name:"Ashwani Kumar",role:"Bowler",team:"MI"},
+  {name:"Gurjapneet Singh",role:"Bowler",team:"CSK"},
+  {name:"Marcus Stoinis",role:"All-Rounder",team:"PBKS"},
+  {name:"Sushant Mishra",role:"Bowler",team:"RR"},
+  {name:"Pyla Avinash",role:"Batsman",team:"PBKS"},
+  {name:"Abishek Porel",role:"Wicketkeeper",team:"DC"},
+  {name:"Mitchell Santner",role:"All-Rounder",team:"MI"},
+  {name:"Atharva Ankolekar",role:"All-Rounder",team:"MI"},
+  {name:"Mukesh Choudhary",role:"Bowler",team:"CSK"},
+  {name:"Trent Boult",role:"Bowler",team:"MI"},
+  {name:"Anukul Roy",role:"All-Rounder",team:"KKR"},
+  {name:"Luke Wood",role:"Bowler",team:"GT"},
+  {name:"Shubham Dubey",role:"Batsman",team:"RR"},
+  {name:"Gurnoor Brar",role:"Bowler",team:"GT"},
+  {name:"Dushmantha Chameera",role:"Bowler",team:"DC"},
+  {name:"Sakib Hussain",role:"Bowler",team:"SRH"},
+  {name:"Romario Shepherd",role:"All-Rounder",team:"RCB"},
+  {name:"Danish Malewar",role:"All-Rounder",team:"MI"},
+  {name:"Salil Arora",role:"Wicketkeeper",team:"SRH"},
+  {name:"Yudhvir Singh Charak",role:"Bowler",team:"RR"},
+  {name:"Mukul Choudhary",role:"Wicketkeeper",team:"LSG"},
+  {name:"Ashok Sharma",role:"Bowler",team:"GT"},
+  {name:"Suryansh Shedge",role:"All-Rounder",team:"PBKS"},
+  {name:"Rasikh Salam Dar",role:"Bowler",team:"RCB"},
+  {name:"Ramakrishna Ghosh",role:"All-Rounder",team:"CSK"},
+  {name:"Ajay Jadav Mandal",role:"All-Rounder",team:"DC"},
+  {name:"Pat Cummins",role:"Bowler",team:"SRH"},
+  {name:"Jayant Yadav",role:"All-Rounder",team:"GT"},
+  {name:"Aman Rao Perala",role:"Batsman",team:"RR"},
+  {name:"Arshad Khan",role:"All-Rounder",team:"GT"},
+  {name:"Vignesh Puthur",role:"Bowler",team:"RR"},
+  {name:"Naman Tiwari",role:"Bowler",team:"LSG"},
+  {name:"Mitchell Marsh",role:"All-Rounder",team:"LSG"},
+  {name:"Rahul Tripathi",role:"Batsman",team:"KKR"},
+  {name:"Yuzvendra Chahal",role:"Bowler",team:"PBKS"},
+  {name:"Azmatullah Omarzai",role:"All-Rounder",team:"PBKS"},
+  {name:"Jamie Overton",role:"All-Rounder",team:"CSK"},
+  {name:"Suyash Sharma",role:"Bowler",team:"RCB"},
+  {name:"Kuldeep Sen",role:"Bowler",team:"RR"},
+  {name:"Washington Sundar",role:"All-Rounder",team:"GT"},
+  {name:"Sameer Rizvi",role:"Batsman",team:"DC"},
+  {name:"Vishal Nishad",role:"All-Rounder",team:"PBKS"},
+  {name:"Himmat Singh",role:"Batsman",team:"LSG"},
+  {name:"Zeeshan Ansari",role:"Bowler",team:"SRH"},
+  {name:"Jack Edwards",role:"Batsman",team:"SRH"},
+  {name:"Brijesh Sharma",role:"Batsman",team:"RR"},
+  {name:"Onkar Tukaram Tarmale",role:"Bowler",team:"SRH"},
+  {name:"Matthew Short",role:"Batsman",team:"CSK"},
+  {name:"Brydon Carse",role:"Bowler",team:"SRH"},
+  {name:"Karun Nair",role:"Batsman",team:"DC"},
+  {name:"Prashant Veer",role:"Bowler",team:"CSK"},
+  {name:"Mangesh Yadav",role:"All-Rounder",team:"RCB"},
+  {name:"Satvik Deswal",role:"All-Rounder",team:"RCB"},
+  {name:"Prince Yadav",role:"Bowler",team:"LSG"},
+  {name:"Lhuan-dre Pretorius",role:"Wicketkeeper",team:"RR"},
+  {name:"Matthew Breetzke",role:"Wicketkeeper",team:"LSG"},
+  {name:"Wanindu Hasaranga",role:"All-Rounder",team:"LSG"},
+  {name:"Sahil Parakh",role:"Batsman",team:"DC"},
+  {name:"Vijaykumar Vyshak",role:"Bowler",team:"PBKS"},
+  {name:"Nathan Ellis",role:"Bowler",team:"CSK"},
+  {name:"Arshin Kulkarni",role:"All-Rounder",team:"LSG"},
+  {name:"Yash Raj Punja",role:"Batsman",team:"RR"},
+  {name:"Vihaan Malhotra",role:"Batsman",team:"RCB"},
+  {name:"Jordan Cox",role:"Wicketkeeper",team:"RCB"},
+  {name:"Abdul Samad",role:"All-Rounder",team:"LSG"},
+  {name:"Manimaran Siddharth",role:"Bowler",team:"LSG"},
+  {name:"Ben Dwarshuis",role:"Bowler",team:"PBKS"},
+  {name:"Lungi Ngidi",role:"Bowler",team:"DC"},
+  {name:"Mayank Rawat",role:"All-Rounder",team:"MI"},
+  {name:"Corbin Bosch",role:"All-Rounder",team:"MI"},
+  {name:"Mayank Markande",role:"Bowler",team:"MI"},
+  {name:"Matheesha Pathirana",role:"Bowler",team:"KKR"},
+  {name:"Akash Maharaj Singh",role:"Bowler",team:"LSG"},
+  {name:"Vishnu Vinod",role:"Wicketkeeper",team:"PBKS"},
+  {name:"Lockie Ferguson",role:"Bowler",team:"PBKS"},
+  {name:"Shreyas Gopal",role:"Bowler",team:"CSK"},
+  {name:"Cooper Connolly",role:"All-Rounder",team:"PBKS"},
+  {name:"Adam Milne",role:"Bowler",team:"RR"},
+  {name:"Praveen Dubey",role:"All-Rounder",team:"PBKS"},
+  {name:"Shashank Singh",role:"All-Rounder",team:"PBKS"},
+  {name:"Shahbaz Ahmed",role:"All-Rounder",team:"LSG"},
+  {name:"Prashant Solanki",role:"Bowler",team:"KKR"},
+  {name:"Vipraj Nigam",role:"Bowler",team:"DC"},
+  {name:"Sam Curran",role:"All-Rounder",team:"RR"},
+  {name:"Umran Malik",role:"Bowler",team:"KKR"},
+  {name:"Xavier Bartlett",role:"Bowler",team:"PBKS"},
+  {name:"Venkatesh Iyer",role:"All-Rounder",team:"RCB"},
+  {name:"Robin Minz",role:"Wicketkeeper",team:"MI"},
+  {name:"Harshit Rana",role:"Bowler",team:"KKR"},
+  {name:"Musheer Khan",role:"All-Rounder",team:"PBKS"},
+  {name:"Ramandeep Singh",role:"All-Rounder",team:"KKR"},
+  {name:"Yash Dayal",role:"Bowler",team:"RCB"},
+  {name:"Ravi Bishnoi",role:"Bowler",team:"RR"},
+  {name:"Sandeep Sharma",role:"Bowler",team:"RR"},
+  {name:"Mukesh Kumar",role:"Bowler",team:"DC"},
+  {name:"Nehal Wadhera",role:"Batsman",team:"PBKS"},
+  {name:"Tushar Deshpande",role:"Bowler",team:"RR"},
+  {name:"AM Ghazanfar",role:"Bowler",team:"MI"},
+  {name:"Jason Holder",role:"All-Rounder",team:"GT"},
+  {name:"Ravi Singh",role:"Wicketkeeper",team:"RR"},
+  {name:"Nuwan Thushara",role:"Bowler",team:"RCB"},
+  {name:"Nishant Sindhu",role:"All-Rounder",team:"GT"},
+  {name:"Vicky Ostwal",role:"Bowler",team:"RCB"},
+  {name:"Akash Deep",role:"Bowler",team:"KKR"},
+  {name:"Shivang Kumar",role:"All-Rounder",team:"SRH"},
+  {name:"Noor Ahmad",role:"Bowler",team:"CSK"},
+  {name:"Cameron Green",role:"All-Rounder",team:"KKR"},
+  {name:"Raghu Sharma",role:"Bowler",team:"MI"},
+  {name:"Kartik Sharma",role:"Wicketkeeper",team:"CSK"},
+  {name:"Anuj Rawat",role:"Wicketkeeper",team:"GT"},
+  {name:"Kanishk Chouhan",role:"Batsman",team:"RCB"},
+  {name:"Mitchell Owen",role:"All-Rounder",team:"PBKS"},
+  {name:"Zakary Foulkes",role:"All-Rounder",team:"CSK"},
+  {name:"Nandre Burger",role:"Bowler",team:"RR"},
+  {name:"Mohammed Salahuddin Izhar",role:"Batsman",team:"MI"},
+  {name:"Ryan Rickelton",role:"Wicketkeeper",team:"MI"},
+  {name:"Daksh Kamra",role:"Batsman",team:"KKR"},
+  {name:"Arjun Tendulkar",role:"All-Rounder",team:"LSG"},
+  {name:"Mohsin Khan",role:"Bowler",team:"LSG"},
+  {name:"Kwena Maphaka",role:"Bowler",team:"RR"},
+  {name:"Kumar Kushagra",role:"Wicketkeeper",team:"GT"},
+  {name:"Raj Bawa",role:"All-Rounder",team:"MI"},
+  {name:"Kyle Jamieson",role:"Bowler",team:"DC"},
+  {name:"Ayush Badoni",role:"All-Rounder",team:"LSG"},
+  {name:"Jacob Duffy",role:"Bowler",team:"RCB"},
+  {name:"Josh Inglis",role:"Wicketkeeper",team:"LSG"},
+  {name:"Eshan Malinga",role:"Bowler",team:"SRH"},
+  {name:"Ishant Sharma",role:"Bowler",team:"GT"},
+  {name:"Donovan Ferreira",role:"Wicketkeeper",team:"RR"},
+  {name:"Rahul Tewatia",role:"All-Rounder",team:"GT"},
+  {name:"Harnoor Singh",role:"Batsman",team:"PBKS"},
+  {name:"Prithvi Raj Yarra",role:"Bowler",team:"GT"},
+  {name:"Auqib Nabi Dar",role:"All-Rounder",team:"DC"},
+  {name:"Sarthak Ranjan",role:"Batsman",team:"KKR"},
+  {name:"Krains Fuletra",role:"Bowler",team:"SRH"},
+  {name:"Swapnil Singh",role:"All-Rounder",team:"RCB"},
+  {name:"Axar Patel",role:"All-Rounder",team:"DC"},
+  {name:"Manish Pandey",role:"Batsman",team:"KKR"},
+  {name:"Tom Banton",role:"Wicketkeeper",team:"GT"},
+  {name:"Manav Suthar",role:"Bowler",team:"GT"},
+  {name:"Tripurana Vijay",role:"All-Rounder",team:"DC"},
+  {name:"Madhav Tiwari",role:"All-Rounder",team:"DC"},
+  {name:"Shivam Mavi",role:"Bowler",team:"SRH"},
+];
+
+function getAvailablePlayers(){
+  const rostered=new Set(ROSTERS.flat().map(p=>p.name));
+  return UNSOLD_PLAYERS.filter(p=>!rostered.has(p.name));
+}
+
+function renderRoster(){
+  renderRosterTabs();
+  const el=document.getElementById('roster-content');
+  if(!el) return;
+  const m=MANAGERS[activeRosterIdx];
+  const roster=ROSTERS[activeRosterIdx];
+  const myPts=fantasyPtsToday[activeRosterIdx];
+  const total=myPts?.total||0;
+  const mIdx=activeRosterIdx;
+  let html='<div style="background:var(--bg3);border:1px solid var(--border);border-radius:14px;padding:12px 14px;margin:8px 0 10px;display:flex;justify-content:space-between;align-items:center;">'
+    +'<div style="display:flex;align-items:center;gap:10px;">'
+    +'<div style="font-size:28px;">'+m.emoji+'</div>'
+    +'<div><div style="font-size:15px;font-weight:900;">'+m.name+'</div>'
+    +'<div style="font-size:11px;color:var(--text2);">'+roster.length+' players</div></div></div>'
+    +'<div style="text-align:right;"><div style="font-size:10px;color:var(--text2);">Today</div>'
+    +'<div style="font-family:\'Barlow Condensed\',sans-serif;font-size:26px;font-weight:800;color:var(--green);">'+total+'</div></div></div>';
+  roster.forEach(function(p,pi){
+    const pd=myPts&&myPts.players&&myPts.players[p.name];
+    const pts=pd?pd.pts:0;
+    const ini=p.name.split(' ').map(function(w){return w[0];}).join('').slice(0,2);
+    const parts=[];
+    if(pd){if(pd.runs!==undefined)parts.push(pd.runs+'r');if(pd.wickets)parts.push(pd.wickets+'w');if(pd.fours)parts.push(pd.fours+'\xd74');if(pd.sixes)parts.push(pd.sixes+'\xd76');}
+    const detail=parts.length?parts.join(' '):'Not played';
+    const ptColor=pts<0?'var(--red)':pts>0?'var(--green)':'var(--text3)';
+    html+='<div class="player-row" style="gap:8px;">'
+      +'<div class="p-ava" style="width:32px;height:32px;font-size:11px;">'+ini+'</div>'
+      +'<div style="flex:1;min-width:0;">'
+      +'<div class="p-nm" style="font-size:12px;">'+p.name+'</div>'
+      +'<div class="p-sub">'+p.team+' \xb7 '+p.role+' \xb7 <span style="color:var(--text3);font-size:9px;">'+detail+'</span></div>'
+      +'</div>'
+      +'<div style="font-family:\'Barlow Condensed\',sans-serif;font-size:16px;font-weight:800;color:'+ptColor+';">'+(pts>0?'+':'')+pts+'</div>'
+      +'<button onclick="dropPlayer('+mIdx+','+pi+')" style="padding:4px 10px;font-size:11px;font-weight:800;border-radius:8px;cursor:pointer;border:1px solid rgba(255,59,82,.3);background:rgba(255,59,82,.1);color:var(--red);flex-shrink:0;">Drop</button>'
+      +'</div>';
+  });
+  html+='<div style="margin-top:10px;">'
+    +'<button onclick="openAddPlayer('+mIdx+')" style="display:block;width:100%;background:rgba(57,211,83,.12);border:1px solid rgba(57,211,83,.3);color:var(--green);font-family:\'Nunito\',sans-serif;font-size:13px;font-weight:800;padding:11px;border-radius:10px;cursor:pointer;">+ Add Player</button>'
+    +'</div>';
+  el.innerHTML=html;
+}
+
+function renderFullSchedule(){
+  const el=document.getElementById('full-schedule');
+  if(!el) return;
+  el.innerHTML=SCHEDULE.map((wk,wi)=>{
+    const isCurrent=wi+1===S.currentWeek, isPast=wi+1<S.currentWeek;
+    const badge=isCurrent?`<span style="background:var(--green);color:#000;padding:2px 8px;border-radius:10px;font-size:10px;font-weight:900;">NOW</span>`:
+                isPast?`<span style="font-size:10px;color:var(--text3);font-weight:700;">DONE</span>`:
+                `<span style="font-size:10px;color:var(--text2);font-weight:700;">UPCOMING</span>`;
+    return`<div class="sched-week">
+      <div class="sched-hdr">
+        <span style="font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:800;">GW${wk.week}</span>
+        ${badge}
+        <span style="font-size:10px;color:var(--text2);">${wk.date}</span>
+      </div>
+      ${wk.matches.map((m,mi)=>{
+        const key=`${wk.week}_${mi}`;
+        const res=S.matchResults[key];
+        const m1=MANAGERS[m.m1], m2=MANAGERS[m.m2];
+        const score=res?.played?`${res.s1.toFixed(0)} - ${res.s2.toFixed(0)}`:'vs';
+        return`<div class="sched-match">
+          <div style="flex:1;font-size:12px;font-weight:800;color:${res?.played&&res.s1>res.s2?'var(--green)':'var(--text)'};">${m1.emoji} ${m1.name}</div>
+          <div style="font-size:11px;font-weight:800;color:var(--text3);min-width:55px;text-align:center;">${score}</div>
+          <div style="flex:1;font-size:12px;font-weight:800;text-align:right;color:${res?.played&&res.s2>res.s1?'var(--green)':'var(--text)'};">${m2.name} ${m2.emoji}</div>
+        </div>`;
+      }).join('')}
+    </div>`;
+  }).join('');
+}
+
+function renderPlayoffs(){
+  const el=document.getElementById('po-content');
+  if(!el) return;
+  const pb=S.playoffBracket;
+  const sorted=getStandings();
+  document.getElementById('po-sub').textContent=S.seasonPhase==='playoffs'?'🏆 Playoffs in progress!':'Top 4 advance after 9 league weeks';
+
+  if(!pb){
+    el.innerHTML=`
+      <div style="font-size:11px;font-weight:800;color:var(--text3);text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px;">Projected Top 4</div>
+      ${sorted.slice(0,4).map((m,i)=>`
+        <div class="stand-row">
+          <div class="stand-rank ${['r1','r2','r3','r4'][i]}">${i+1}</div>
+          <div style="font-size:18px;">${m.emoji}</div>
+          <div style="flex:1;"><div style="font-size:13px;font-weight:800;">${m.name}</div></div>
+          <div style="font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;">${m.wins}-${m.losses}</div>
+        </div>`).join('')}
+      ${S.currentWeek>=9&&S.seasonPhase==='league'?`
+        <div style="margin-top:12px;">
+          <button onclick="startPlayoffs()" style="display:block;width:100%;background:var(--grad-gold);color:#000;border:none;padding:13px;border-radius:12px;font-family:'Nunito',sans-serif;font-size:14px;font-weight:900;cursor:pointer;">🏆 Start Playoffs</button>
+        </div>`:''}`;
+    return;
+  }
+
+  const getM=i=>i!==null?MANAGERS[i]:null;
+  function pmBlock(m, cls, accent){
+    const m1=getM(m.m1idx), m2=getM(m.m2idx);
+    if(!m1||!m2) return`<div class="po-match ${cls}"><div class="po-hdr"><span style="font-size:11px;font-weight:900;color:${accent};">${m.label}</span></div><div style="padding:14px;text-align:center;color:var(--text3);font-size:12px;">Awaiting previous result…</div></div>`;
+    const w1=m.played&&m.winner===m.m1idx, w2=m.played&&m.winner===m.m2idx;
+    return`<div class="po-match ${cls}">
+      <div class="po-hdr">
+        <span style="font-size:11px;font-weight:900;color:${accent};">${m.label}</span>
+        <span style="font-size:10px;color:var(--text2);">${m.note||''}</span>
+      </div>
+      <div class="po-body">
+        <div class="po-side">
+          <div style="font-size:16px;">${m1.emoji}</div>
+          <div style="font-size:12px;font-weight:800;">${m1.name}</div>
+          <div class="po-score ${w1?'win':''}">${m.played?m.s1.toFixed(0):'—'}</div>
+        </div>
+        <div style="font-size:12px;font-weight:900;color:var(--text3);">VS</div>
+        <div class="po-side r">
+          <div style="font-size:16px;">${m2.emoji}</div>
+          <div style="font-size:12px;font-weight:800;">${m2.name}</div>
+          <div class="po-score ${w2?'win':''}">${m.played?m.s2.toFixed(0):'—'}</div>
+        </div>
+      </div>
+      ${m.played?`<div style="text-align:center;padding:0 12px 10px;font-size:12px;font-weight:800;color:${accent};">${MANAGERS[m.winner].name} advances! ${cls==='final'?'🏆':''}</div>`:
+      `<button onclick="simPO('${cls}')" style="display:block;width:calc(100% - 24px);margin:0 12px 12px;background:var(--bg4);border:1px dashed var(--border2);color:var(--text2);font-family:'Nunito',sans-serif;font-size:12px;font-weight:800;padding:8px;border-radius:8px;cursor:pointer;">▶ Lock in result</button>`}
+    </div>`;
+  }
+  el.innerHTML=`
+    <div style="font-size:11px;font-weight:800;color:var(--text3);text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px;">Round 1</div>
+    ${pmBlock(pb.q1,'q1','var(--green)')}
+    ${pmBlock(pb.elim,'elim','var(--orange)')}
+    <div style="font-size:11px;font-weight:800;color:var(--text3);text-transform:uppercase;letter-spacing:.5px;margin:10px 0 8px;">Round 2</div>
+    ${pmBlock(pb.q2,'q2','var(--blue)')}
+    <div style="font-size:11px;font-weight:800;color:var(--text3);text-transform:uppercase;letter-spacing:.5px;margin:10px 0 8px;">🏆 Grand Final</div>
+    ${pmBlock(pb.final,'final','var(--gold)')}
+    ${pb.champion!==null?`
+      <div style="margin:8px 0;background:linear-gradient(135deg,#1a1a00,#001a00);border:2px solid var(--gold);border-radius:14px;padding:20px;text-align:center;">
+        <div style="font-size:48px;">🏆</div>
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:800;color:var(--gold);">WILDFIRE CHAMPION</div>
+        <div style="font-size:36px;margin:8px 0;">${MANAGERS[pb.champion].emoji}</div>
+        <div style="font-size:20px;font-weight:900;color:var(--gold);">${MANAGERS[pb.champion].name}</div>
+      </div>`:''}`;
+}
+
+// ═══════════════════════════════════════════
+// HOST CONTROLS
+// ═══════════════════════════════════════════
+function openModal(type){
+  const mc=document.getElementById('modal-content');
+  if(type==='week'){
+    mc.innerHTML=`
+      <div class="sheet-title">⚙️ Host Controls</div>
+      <div style="font-size:13px;color:var(--text2);margin-bottom:14px;">Week ${S.currentWeek} of 9 · ${S.seasonPhase}</div>
+
+      <div style="font-size:11px;font-weight:800;color:var(--text3);text-transform:uppercase;margin-bottom:8px;">Lock Week Results</div>
+      <div id="lock-week-matchups" style="margin-bottom:12px;"></div>
+      <button class="sheet-btn p" onclick="lockWeekAndAdvance()">✅ Lock Results & Advance to Week ${S.currentWeek+1}</button>
+
+      <div style="height:12px;"></div>
+      <div style="font-size:11px;font-weight:800;color:var(--text3);text-transform:uppercase;margin-bottom:8px;">Manual Score Override</div>
+      <select id="override-mgr" class="sheet-input">
+        ${MANAGERS.map((m,i)=>`<option value="${i}">${m.emoji} ${m.name}</option>`).join('')}
+      </select>
+      <input class="sheet-input" id="override-pts" type="number" placeholder="Fantasy points this week" step="0.5">
+      <button class="sheet-btn s" onclick="applyOverride()">Apply Score Override</button>
+
+      ${S.currentWeek>=9&&S.seasonPhase==='league'?`<div style="height:12px;"></div><button class="sheet-btn" style="background:var(--grad-gold);color:#000;" onclick="startPlayoffs();closeModal();">🏆 Start Playoffs</button>`:''}
+      <button class="sheet-btn r" style="margin-top:12px;" onclick="if(confirm('Reset all data?')){localStorage.removeItem('${SAVE_KEY}');location.reload();}">🗑 Reset All Data</button>
+      <button class="sheet-btn s" onclick="closeModal()">Cancel</button>`;
+    // Fill matchup score inputs
+    renderLockMatchups();
+  }
+  document.getElementById('modal').classList.add('open');
+}
+
+function renderLockMatchups(){
+  const el=document.getElementById('lock-week-matchups');
+  if(!el) return;
+  const wk=S.currentWeek-1;
+  if(wk>=9){el.innerHTML='<div style="color:var(--text3);font-size:12px;">Season complete</div>';return;}
+  const matches=SCHEDULE[wk].matches;
+  el.innerHTML=matches.map((m,mi)=>{
+    const key=`${S.currentWeek}_${mi}`;
+    const res=S.matchResults[key]||{};
+    const m1=MANAGERS[m.m1], m2=MANAGERS[m.m2];
+    return`<div style="background:var(--bg3);border-radius:10px;padding:10px;margin-bottom:6px;">
+      <div style="font-size:11px;font-weight:800;color:var(--text2);margin-bottom:6px;">${m1.emoji} ${m1.name} vs ${m2.emoji} ${m2.name}</div>
+      <div style="display:flex;gap:8px;align-items:center;">
+        <input id="s1_${mi}" type="number" value="${res.s1||fantasyPtsToday[m.m1]?.total||''}" placeholder="${m1.name.split(' ')[0]} pts" step="0.5"
+          style="flex:1;background:var(--bg4);border:1px solid var(--border);color:var(--text);padding:7px 10px;border-radius:8px;font-size:13px;font-weight:800;outline:none;">
+        <span style="font-size:11px;font-weight:800;color:var(--text3);">vs</span>
+        <input id="s2_${mi}" type="number" value="${res.s2||fantasyPtsToday[m.m2]?.total||''}" placeholder="${m2.name.split(' ')[0]} pts" step="0.5"
+          style="flex:1;background:var(--bg4);border:1px solid var(--border);color:var(--text);padding:7px 10px;border-radius:8px;font-size:13px;font-weight:800;outline:none;">
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function lockWeekAndAdvance(){
+  const wk=S.currentWeek-1;
+  if(wk>=9){toast('Season complete!','gold');return;}
+  const matches=SCHEDULE[wk].matches;
+  matches.forEach((m,mi)=>{
+    const s1=parseFloat(document.getElementById(`s1_${mi}`)?.value)||0;
+    const s2=parseFloat(document.getElementById(`s2_${mi}`)?.value)||0;
+    const key=`${S.currentWeek}_${mi}`;
+    S.matchResults[key]={s1,s2,played:true,winner:s1>s2?m.m1:m.m2};
+  });
+  if(S.currentWeek<9) S.currentWeek++;
+  else S.seasonPhase='playoffs';
+  saveState();
+  closeModal();
+  renderAll();
+  toast(`Week ${S.currentWeek-1} locked ✅ Now GW${S.currentWeek}`,'g');
+}
+
+function applyOverride(){
+  const mi=parseInt(document.getElementById('override-mgr').value);
+  const pts=parseFloat(document.getElementById('override-pts').value)||0;
+  if(!fantasyPtsToday[mi]) fantasyPtsToday[mi]={total:0,players:{}};
+  fantasyPtsToday[mi].total=pts;
+  renderScoresLB();renderHomeLB();renderHome();
+  toast(`${MANAGERS[mi].name} set to ${pts} pts ✅`,'g');
+}
+
+// ═══════════════════════════════════════════
+// ROSTER EDITING
+// ═══════════════════════════════════════════
+function dropPlayer(mgrIdx, pIdx){
+  const p=ROSTERS[mgrIdx][pIdx];
+  if(!p) return;
+  if(!confirm('Drop '+p.name+' from '+MANAGERS[mgrIdx].name+'?')) return;
+  if(!UNSOLD_PLAYERS.some(u=>u.name===p.name)) UNSOLD_PLAYERS.push({name:p.name,role:p.role,team:p.team});
+  ROSTERS[mgrIdx].splice(pIdx,1);
+  renderRoster();
+  renderUnsoldList();
+  toast(p.name+' dropped — back in unsold pool 🔄','g');
+}
+
+function openAddPlayer(mgrIdx){
+  // Get all unsold/available players
+  const allRostered=new Set(ROSTERS.flat().map(p=>p.name));
+  const mc=document.getElementById('modal-content');
+  mc.innerHTML=`
+    <div class="sheet-title">+ Add Player to ${MANAGERS[mgrIdx].name}</div>
+    <input class="sheet-input" id="add-search" placeholder="Search player name…" oninput="filterAddList(${mgrIdx})">
+    <div id="add-player-list" style="max-height:50vh;overflow-y:auto;"></div>
+    <button class="sheet-btn s" onclick="closeModal()">Cancel</button>`;
+  document.getElementById('modal').classList.add('open');
+  filterAddList(mgrIdx);
+}
+
+function filterAddList(mgrIdx){
+  const q=(document.getElementById('add-search')?.value||'').toLowerCase();
+  const allRostered=new Set(ROSTERS.flat().map(p=>p.name));
+  const pool=[...UNSOLD_PLAYERS,...ROSTERS.flat()].filter((p,i,arr)=>arr.findIndex(x=>x.name===p.name)===i);
+  const avail=pool.filter(p=>!allRostered.has(p.name)&&(!q||p.name.toLowerCase().includes(q)||p.team.toLowerCase().includes(q)));
+  const el=document.getElementById('add-player-list');
+  if(!el) return;
+  if(!avail.length){el.innerHTML='<div style="text-align:center;padding:16px;color:var(--text3);">No players found</div>';return;}
+  el.innerHTML=avail.map(p=>{
+    const sN=p.name.replace(/'/g,"\'");
+    return`<div onclick="addPlayer(${mgrIdx},'${sN}','${p.role}','${p.team}')" style="display:flex;align-items:center;gap:10px;padding:10px 12px;background:var(--bg3);border-radius:10px;margin-bottom:3px;cursor:pointer;border:1px solid var(--border);">
+      <div style="flex:1;"><div style="font-size:13px;font-weight:800;">${p.name}</div><div style="font-size:10px;color:var(--text2);">${p.team} · ${p.role}</div></div>
+      <div style="color:var(--green);font-size:20px;font-weight:900;">+</div>
+    </div>`;
+  }).join('');
+}
+
+function addPlayer(mgrIdx, name, role, team){
+  ROSTERS[mgrIdx].push({name,role,team});
+  const ui=UNSOLD_PLAYERS.findIndex(p=>p.name===name);
+  if(ui>=0) UNSOLD_PLAYERS.splice(ui,1);
+  closeModal();
+  renderRoster();
+  renderUnsoldList();
+  toast(name+' added to '+MANAGERS[mgrIdx].name+' ✅','g');
+}
+
+// ═══════════════════════════════════════════
+// PLAYOFFS
+// ═══════════════════════════════════════════
+function startPlayoffs(){
+  const sorted=getStandings();
+  if(sorted.length<4){toast('Need at least 4 managers!','r');return;}
+  S.seasonPhase='playoffs';
+  S.playoffBracket={
+    q1:{m1idx:sorted[0].idx,m2idx:sorted[1].idx,played:false,s1:0,s2:0,winner:null,label:'Qualifier 1',note:'Winner → Final · Loser → Q2'},
+    elim:{m1idx:sorted[2].idx,m2idx:sorted[3].idx,played:false,s1:0,s2:0,winner:null,label:'Eliminator',note:'Winner → Q2 · Loser out'},
+    q2:{m1idx:null,m2idx:null,played:false,s1:0,s2:0,winner:null,label:'Qualifier 2',note:'Winner → Final'},
+    final:{m1idx:null,m2idx:null,played:false,s1:0,s2:0,winner:null,label:'🏆 Grand Final',note:''},
+    champion:null
+  };
+  saveState();
+  renderAll();
+  showTab('playoffs');
+  toast('🏆 Playoffs started!','gold');
+}
+
+function simPO(key){
+  const pb=S.playoffBracket;
+  const m=pb[key];
+  if(!m||m.m1idx===null||m.m2idx===null){toast('Not ready yet!','r');return;}
+  const mc=document.getElementById('modal-content');
+  const m1=MANAGERS[m.m1idx], m2=MANAGERS[m.m2idx];
+  mc.innerHTML=`
+    <div class="sheet-title">🏆 ${m.label} Result</div>
+    <div style="display:flex;gap:8px;margin-bottom:14px;">
+      <div style="flex:1;text-align:center;">
+        <div style="font-size:28px;">${m1.emoji}</div>
+        <div style="font-size:12px;font-weight:800;">${m1.name}</div>
+        <input id="po_s1" type="number" placeholder="Score" step="0.5"
+          style="width:100%;margin-top:6px;background:var(--bg4);border:1px solid var(--border);color:var(--text);padding:8px;border-radius:8px;font-size:16px;font-weight:800;text-align:center;outline:none;">
+      </div>
+      <div style="display:flex;align-items:center;font-size:14px;font-weight:900;color:var(--text3);">VS</div>
+      <div style="flex:1;text-align:center;">
+        <div style="font-size:28px;">${m2.emoji}</div>
+        <div style="font-size:12px;font-weight:800;">${m2.name}</div>
+        <input id="po_s2" type="number" placeholder="Score" step="0.5"
+          style="width:100%;margin-top:6px;background:var(--bg4);border:1px solid var(--border);color:var(--text);padding:8px;border-radius:8px;font-size:16px;font-weight:800;text-align:center;outline:none;">
+      </div>
+    </div>
+    <button class="sheet-btn p" onclick="lockPO('${key}')">🔒 Lock Result</button>
+    <button class="sheet-btn s" onclick="closeModal()">Cancel</button>`;
+  document.getElementById('modal').classList.add('open');
+}
+
+function lockPO(key){
+  const pb=S.playoffBracket;
+  const m=pb[key];
+  const s1=parseFloat(document.getElementById('po_s1')?.value)||0;
+  const s2=parseFloat(document.getElementById('po_s2')?.value)||0;
+  if(s1===s2){toast('Scores cannot be equal!','r');return;}
+  m.s1=s1; m.s2=s2; m.played=true;
+  m.winner=s1>s2?m.m1idx:m.m2idx;
+  m.loser=s1>s2?m.m2idx:m.m1idx;
+
+  if(key==='q1'){pb.q2.m1idx=m.loser; toast(`${MANAGERS[m.winner].name} → Final! ${MANAGERS[m.loser].name} → Q2`,'gold');}
+  else if(key==='elim'){pb.q2.m2idx=m.winner; toast(`${MANAGERS[m.winner].name} → Q2! ${MANAGERS[m.loser].name} eliminated`,'gold');}
+  else if(key==='q2'){pb.final.m1idx=pb.q1.winner; pb.final.m2idx=m.winner; toast(`${MANAGERS[m.winner].name} → Final!`,'gold');}
+  else if(key==='final'){pb.champion=m.winner; toast(`🏆 ${MANAGERS[m.winner].name} are CHAMPIONS!`,'gold');}
+
+  saveState();
+  closeModal();
+  renderPlayoffs();
+}
+
+// ═══════════════════════════════════════════
+// NAV / UTIL
+// ═══════════════════════════════════════════
+
+var rosterMode='rosters',tradeMgr1=0,tradeMgr2=1,tradePick1=null,tradePick2=null,unsoldFilter='';
+
+function setRosterMode(mode){
+  rosterMode=mode;
+  ['rosters','unsold','trade'].forEach(function(m){
+    var el=document.getElementById('rmode-'+m);
+    if(!el)return;
+    var active=m===mode;
+    el.style.border=active?'1px solid var(--green)':'1px solid var(--border)';
+    el.style.background=active?'rgba(57,211,83,.15)':'var(--bg3)';
+    el.style.color=active?'var(--green)':'var(--text2)';
+  });
+  var rtabs=document.getElementById('roster-tabs');
+  if(rtabs)rtabs.style.display=mode==='rosters'?'':'none';
+  if(mode==='rosters'){renderRosterTabs();renderRoster();}
+  else if(mode==='unsold')renderUnsoldInRoster();
+  else if(mode==='trade')renderTradePanel();
+}
+
+function renderUnsoldInRoster(){
+  var el=document.getElementById('roster-content');
+  if(!el)return;
+  var rtabs=document.getElementById('roster-tabs');
+  if(rtabs)rtabs.style.display='none';
+  var avail=getAvailablePlayers();
+  var q=unsoldFilter.toLowerCase();
+  var filtered=q?avail.filter(function(p){return p.name.toLowerCase().includes(q)||p.team.toLowerCase().includes(q)||p.role.toLowerCase().includes(q);}):avail;
+  var rclr={'Bowler':'var(--blue)','All-Rounder':'var(--purple)','Wicketkeeper':'var(--gold)','Batsman':'var(--green)'};
+  var html='<div style="font-size:15px;font-weight:900;margin-bottom:6px;">Free Agents ('+avail.length+')</div>'
+    +'<input value="'+unsoldFilter+'" oninput="unsoldFilter=this.value;renderUnsoldInRoster();" placeholder="Search name, team or role..." style="width:100%;background:var(--bg3);border:1px solid var(--border2);color:var(--text);padding:9px 12px;border-radius:10px;font-size:13px;outline:none;margin-bottom:8px;">';
+  if(!filtered.length)html+='<div style="text-align:center;padding:20px;color:var(--text3);">No players found</div>';
+  filtered.forEach(function(p){
+    var rc=rclr[p.role]||'var(--text2)';
+    var safe=p.name.replace(/"/g,'&quot;');
+    html+='<div class="player-row" style="gap:8px;">'
+      +'<div style="flex:1;min-width:0;"><div style="font-size:13px;font-weight:800;">'+p.name+'</div>'
+      +'<div style="font-size:10px;"><span style="color:'+rc+';font-weight:800;">'+p.role+'</span> · '+p.team+'</div></div>'
+      +'<button data-name="'+safe+'" data-role="'+p.role+'" data-team="'+p.team+'" onclick="openAddToTeamFromRoster(this.dataset.name,this.dataset.role,this.dataset.team)" style="padding:5px 12px;font-size:11px;font-weight:800;border-radius:7px;cursor:pointer;border:1px solid rgba(57,211,83,.3);background:rgba(57,211,83,.1);color:var(--green);font-family:Nunito,sans-serif;flex-shrink:0;">Add</button>'
+      +'</div>';
+  });
+  el.innerHTML=html;
+}
+
+function openAddToTeamFromRoster(name,role,team){
+  var mc=document.getElementById('modal-content');
+  var html='<div class="sheet-title">Add '+name+'</div>'
+    +'<div style="font-size:11px;color:var(--text2);margin-bottom:12px;">'+role+' · '+team+'</div>';
+  MANAGERS.forEach(function(m,i){
+    html+='<div data-idx="'+i+'" data-name="'+name.replace(/"/g,'&quot;')+'" data-role="'+role+'" data-team="'+team+'" onclick="addToRoster(parseInt(this.dataset.idx),this.dataset.name,this.dataset.role,this.dataset.team);closeModal();" style="display:flex;align-items:center;gap:10px;padding:11px;background:var(--bg3);border-radius:10px;margin-bottom:5px;cursor:pointer;border:1px solid var(--border);">'
+      +'<div style="font-size:20px;">'+m.emoji+'</div><div style="flex:1;font-size:13px;font-weight:800;">'+m.name+'</div>'
+      +'<div style="font-size:11px;color:var(--text2);">'+ROSTERS[i].length+' players</div>'
+      +'<div style="color:var(--green);font-weight:800;">+</div></div>';
+  });
+  html+='<button class="sheet-btn s" onclick="closeModal()">Cancel</button>';
+  mc.innerHTML=html;
+  document.getElementById('modal').classList.add('open');
+}
+
+function addToRoster(mgrIdx,name,role,team){
+  ROSTERS[mgrIdx].push({name:name,role:role,team:team});
+  var idx=UNSOLD_PLAYERS.findIndex(function(p){return p.name===name;});
+  if(idx>-1)UNSOLD_PLAYERS.splice(idx,1);
+  toast(name+' added to '+MANAGERS[mgrIdx].name,'g');
+  renderUnsoldInRoster();
+}
+
+function confirmDropPlayer(mgrIdx,pIdx){
+  var p=ROSTERS[mgrIdx][pIdx];
+  if(!p)return;
+  var mc=document.getElementById('modal-content');
+  mc.innerHTML='<div class="sheet-title">Drop '+p.name+'?</div>'
+    +'<div style="background:var(--bg3);border-radius:10px;padding:12px;margin-bottom:12px;">'
+    +'<div style="font-size:14px;font-weight:900;">'+p.name+'</div>'
+    +'<div style="font-size:11px;color:var(--text2);">'+p.role+' · '+p.team+' · '+MANAGERS[mgrIdx].name+'</div></div>'
+    +'<div style="font-size:11px;color:var(--text2);margin-bottom:12px;">Player returns to free agent pool.</div>'
+    +'<button class="sheet-btn r" data-mi="'+mgrIdx+'" data-pi="'+pIdx+'" onclick="doDropPlayer(parseInt(this.dataset.mi),parseInt(this.dataset.pi));closeModal();">Confirm Drop</button>'
+    +'<button class="sheet-btn s" onclick="closeModal()">Cancel</button>';
+  document.getElementById('modal').classList.add('open');
+}
+
+function doDropPlayer(mgrIdx,pIdx){
+  var p=ROSTERS[mgrIdx].splice(pIdx,1)[0];
+  if(!UNSOLD_PLAYERS.some(function(u){return u.name===p.name;}))UNSOLD_PLAYERS.unshift(p);
+  renderRoster();
+  toast(p.name+' dropped','g');
+}
+
+function renderTradePanel(){
+  var el=document.getElementById('roster-content');
+  if(!el)return;
+  var rtabs=document.getElementById('roster-tabs');
+  if(rtabs)rtabs.style.display='none';
+  var rclr={'Bowler':'var(--blue)','All-Rounder':'var(--purple)','Wicketkeeper':'var(--gold)','Batsman':'var(--green)'};
+  var m1o=MANAGERS.map(function(m,i){return '<option value="'+i+'"'+(i===tradeMgr1?' selected':'')+'>'+m.emoji+' '+m.name+'</option>';}).join('');
+  var m2o=MANAGERS.map(function(m,i){return '<option value="'+i+'"'+(i===tradeMgr2?' selected':'')+'>'+m.emoji+' '+m.name+'</option>';}).join('');
+  var html='<div style="font-size:15px;font-weight:900;margin-bottom:4px;">Manual Trade</div>'
+    +'<div style="font-size:11px;color:var(--text2);margin-bottom:12px;">Select 2 teams, pick one player each, confirm swap.</div>'
+    +'<div style="display:flex;gap:8px;margin-bottom:12px;">'
+    +'<div style="flex:1;"><div style="font-size:10px;font-weight:800;color:var(--text2);margin-bottom:5px;">TEAM 1</div>'
+    +'<select onchange="tradeMgr1=parseInt(this.value);tradePick1=null;tradePick2=null;renderTradePanel();" style="width:100%;background:var(--bg3);border:1px solid var(--border2);color:var(--text);padding:9px;border-radius:8px;font-size:12px;outline:none;">'+m1o+'</select></div>'
+    +'<div style="flex:1;"><div style="font-size:10px;font-weight:800;color:var(--text2);margin-bottom:5px;">TEAM 2</div>'
+    +'<select onchange="tradeMgr2=parseInt(this.value);tradePick1=null;tradePick2=null;renderTradePanel();" style="width:100%;background:var(--bg3);border:1px solid var(--border2);color:var(--text);padding:9px;border-radius:8px;font-size:12px;outline:none;">'+m2o+'</select></div></div>';
+  if(tradeMgr1===tradeMgr2){html+='<div style="text-align:center;padding:14px;color:var(--red);font-weight:800;">Select 2 different teams!</div>';el.innerHTML=html;return;}
+  var r1=ROSTERS[tradeMgr1],r2=ROSTERS[tradeMgr2];
+  html+='<div style="display:flex;gap:6px;">';
+  html+='<div style="flex:1;"><div style="font-size:10px;font-weight:800;color:var(--text2);margin-bottom:5px;">'+MANAGERS[tradeMgr1].emoji+' GIVES</div>';
+  r1.forEach(function(p,pi){
+    var sel=tradePick1===pi;
+    var rc=rclr[p.role]||'var(--text2)';
+    html+='<div data-pi="'+pi+'" onclick="tradePick1=parseInt(this.dataset.pi);renderTradePanel();" style="padding:7px;background:'+(sel?'rgba(57,211,83,.15)':'var(--bg3)')+';border:1px solid '+(sel?'var(--green)':'var(--border)')+';border-radius:8px;margin-bottom:3px;cursor:pointer;">'
+      +'<div style="font-size:11px;font-weight:800;">'+p.name+'</div>'
+      +'<div style="font-size:9px;color:'+rc+';">'+p.role+' · '+p.team+'</div></div>';
+  });
+  html+='</div><div style="flex:1;"><div style="font-size:10px;font-weight:800;color:var(--text2);margin-bottom:5px;">'+MANAGERS[tradeMgr2].emoji+' GIVES</div>';
+  r2.forEach(function(p,pi){
+    var sel=tradePick2===pi;
+    var rc=rclr[p.role]||'var(--text2)';
+    html+='<div data-pi="'+pi+'" onclick="tradePick2=parseInt(this.dataset.pi);renderTradePanel();" style="padding:7px;background:'+(sel?'rgba(245,200,66,.15)':'var(--bg3)')+';border:1px solid '+(sel?'var(--gold)':'var(--border)')+';border-radius:8px;margin-bottom:3px;cursor:pointer;">'
+      +'<div style="font-size:11px;font-weight:800;">'+p.name+'</div>'
+      +'<div style="font-size:9px;color:'+rc+';">'+p.role+' · '+p.team+'</div></div>';
+  });
+  html+='</div></div>';
+  if(tradePick1!==null&&tradePick2!==null){
+    var p1=r1[tradePick1],p2=r2[tradePick2];
+    html+='<div style="margin-top:10px;background:var(--bg3);border-radius:12px;padding:12px;margin-bottom:8px;display:flex;align-items:center;gap:8px;">'
+      +'<div style="flex:1;text-align:center;"><div style="font-size:12px;font-weight:800;">'+p1.name+'</div><div style="font-size:10px;color:var(--text2);">to '+MANAGERS[tradeMgr2].name+'</div></div>'
+      +'<div style="font-size:20px;">🔄</div>'
+      +'<div style="flex:1;text-align:center;"><div style="font-size:12px;font-weight:800;">'+p2.name+'</div><div style="font-size:10px;color:var(--text2);">to '+MANAGERS[tradeMgr1].name+'</div></div></div>'
+      +'<button onclick="doTrade()" style="display:block;width:100%;background:var(--grad-green);color:#000;border:none;padding:12px;border-radius:10px;font-family:Nunito,sans-serif;font-size:14px;font-weight:900;cursor:pointer;">Confirm Trade</button>';
+  }
+  el.innerHTML=html;
+}
+
+function doTrade(){
+  if(tradePick1===null||tradePick2===null){toast('Select a player from each team!','r');return;}
+  if(tradeMgr1===tradeMgr2){toast('Select 2 different teams!','r');return;}
+  var p1=Object.assign({},ROSTERS[tradeMgr1][tradePick1]);
+  var p2=Object.assign({},ROSTERS[tradeMgr2][tradePick2]);
+  ROSTERS[tradeMgr1][tradePick1]=p2;
+  ROSTERS[tradeMgr2][tradePick2]=p1;
+  tradePick1=null;tradePick2=null;
+  toast(p1.name+' and '+p2.name+' traded!','gold');
+  renderTradePanel();
+}
+
+function showTab(t){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
+  document.getElementById('tab-'+t).classList.add('active');
+  const ni=document.getElementById('nav-'+t); if(ni) ni.classList.add('active');
+  if(t==='home'){renderHome();renderHomeLB();}
+  if(t==='league'){renderStandings();renderCurrentMatchups();}
+  if(t==='scores'){startScorePolling();renderScoresLB();}
+  if(t==='roster'){setRosterMode('rosters');renderRoster();}
+  if(t==='playoffs') renderPlayoffs();
+  if(t==='schedule') renderFullSchedule();
+  if(t==='unsold') renderUnsoldList();
+  if(t!=='scores') stopScorePolling();
+}
+
+function closeModal(){document.getElementById('modal').classList.remove('open');}
+
+function startScorePolling(){
+  fetchLiveScores(false);
+  if(liveScoreInterval) clearInterval(liveScoreInterval);
+  liveScoreInterval=setInterval(()=>fetchLiveScores(false),360000);
+}
+function stopScorePolling(){if(liveScoreInterval){clearInterval(liveScoreInterval);liveScoreInterval=null;}}
+
+function toast(msg,cls=''){
+  const t=document.getElementById('toast');
+  t.textContent=msg; t.className=`show ${cls}`;
+  clearTimeout(t._t); t._t=setTimeout(()=>t.className='',3000);
+}
+
+
+let unsoldRoleFilter='';
+function setUnsoldFilter(role){
+  unsoldRoleFilter=role;
+  ['all','bat','bowl','ar','wk'].forEach(k=>{
+    const btn=document.getElementById('uf-'+k);
+    if(!btn) return;
+    const a=(k==='all'&&!role)||(k==='bat'&&role==='Batsman')||(k==='bowl'&&role==='Bowler')||(k==='ar'&&role==='All-Rounder')||(k==='wk'&&role==='Wicketkeeper');
+    btn.style.borderColor=a?'var(--green)':'var(--border)';
+    btn.style.background=a?'rgba(57,211,83,.15)':'var(--bg3)';
+    btn.style.color=a?'var(--green)':'var(--text2)';
+  });
+  renderUnsoldList();
+}
+function renderUnsoldList(){
+  const el=document.getElementById('unsold-list');
+  const cEl=document.getElementById('unsold-count');
+  if(!el) return;
+  const q=(document.getElementById('unsold-search')?.value||'').toLowerCase();
+  const allRostered=new Set(ROSTERS.flat().map(p=>p.name));
+  let list=UNSOLD_PLAYERS.filter(p=>!allRostered.has(p.name));
+  if(unsoldRoleFilter) list=list.filter(p=>p.role===unsoldRoleFilter);
+  if(q) list=list.filter(p=>p.name.toLowerCase().includes(q)||p.team.toLowerCase().includes(q));
+  if(cEl) cEl.textContent=list.length+' available';
+  if(!list.length){el.innerHTML='<div style="text-align:center;padding:24px;color:var(--text3);">No players found</div>';return;}
+  el.innerHTML=list.map(p=>{
+    const sN=p.name.replace(/'/g,"\'");
+    return`<div style="display:flex;align-items:center;gap:10px;padding:10px 12px;background:var(--bg3);border-radius:10px;margin-bottom:3px;border:1px solid var(--border);">
+      <div style="flex:1;min-width:0;">
+        <div style="font-size:13px;font-weight:800;">${p.name}</div>
+        <div style="font-size:10px;color:var(--text2);">${p.team} · ${p.role}</div>
+      </div>
+      <select onchange="if(this.value>=0){addPlayerFromUnsold('${sN}','${p.role}','${p.team}',parseInt(this.value));this.value='';}" style="background:var(--bg4);border:1px solid rgba(57,211,83,.3);color:var(--green);font-size:11px;font-weight:800;padding:5px 8px;border-radius:8px;cursor:pointer;outline:none;font-family:'Nunito',sans-serif;">
+        <option value="">+ Add to…</option>
+        ${MANAGERS.map((m,mi)=>`<option value="${mi}">${m.emoji} ${m.name}</option>`).join('')}
+      </select>
+    </div>`;
+  }).join('');
+}
+function addPlayerFromUnsold(name,role,team,mgrIdx){
+  ROSTERS[mgrIdx].push({name,role,team});
+  const ui=UNSOLD_PLAYERS.findIndex(p=>p.name===name);
+  if(ui>=0) UNSOLD_PLAYERS.splice(ui,1);
+  renderUnsoldList();
+  toast(name+' → '+MANAGERS[mgrIdx].name+' ✅','g');
+}
+// INIT
+window.addEventListener('DOMContentLoaded',()=>{
+  renderAll();
+  showTab('home');
+  // Start score polling
+  startScorePolling();
+});
+</script>
+</body>
+</html>
